@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yasir Darwish — Creative Marketer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A0A0A;
+  --bg-elev:#0F0F0F;
+  --accent:#9DFF2E;
+  --accent-dim:rgba(157,255,46,0.12);
+  --text:#F5F5F5;
+  --text-dim:#8A8A8A;
+  --text-faint:#5A5A5A;
+  --glass-fill:rgba(255,255,255,0.045);
+  --glass-fill-strong:rgba(255,255,255,0.07);
+  --glass-border:rgba(255,255,255,0.09);
+  --glass-border-strong:rgba(255,255,255,0.16);
+  --radius-sm:10px;
+  --radius-md:18px;
+  --radius-lg:28px;
+  --font-en:'Inter',sans-serif;
+  --font-ar:'IBM Plex Sans Arabic',sans-serif;
+  --maxw:1180px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-en);
+  font-feature-settings:"ss01";
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+body.lang-ar{font-family:var(--font-ar);}
+body.lang-ar *{font-family:var(--font-ar) !important;}
+
+/* ===== Ambient background ===== */
+.ambient{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 900px 600px at 18% -5%, rgba(157,255,46,0.07), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 100% 30%, rgba(157,255,46,0.04), transparent 60%),
+    radial-gradient(ellipse 800px 800px at 50% 110%, rgba(255,255,255,0.03), transparent 60%);
+}
+.noise{
+  position:fixed; inset:0; z-index:1; pointer-events:none; opacity:0.025;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ===== Layout helpers ===== */
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px; position:relative; z-index:2;}
+section{position:relative; z-index:2;}
+@media(max-width:680px){.wrap{padding:0 20px;}}
+
+/* ===== Glass utility ===== */
+.glass{
+  background:var(--glass-fill);
+  border:1px solid var(--glass-border);
+  -webkit-backdrop-filter:blur(20px) saturate(140%);
+  backdrop-filter:blur(20px) saturate(140%);
+  border-radius:var(--radius-md);
+}
+.glass-strong{
+  background:var(--glass-fill-strong);
+  border:1px solid var(--glass-border-strong);
+  -webkit-backdrop-filter:blur(24px) saturate(160%);
+  backdrop-filter:blur(24px) saturate(160%);
+}
+
+/* ===== Nav ===== */
+.nav{
+  position:fixed; top:18px; left:50%; transform:translateX(-50%);
+  z-index:100; width:calc(100% - 40px); max-width:1040px;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 22px; border-radius:100px;
+}
+.nav-logo{font-weight:800; font-size:17px; letter-spacing:-0.02em; color:var(--text); text-decoration:none; display:flex; align-items:center; gap:8px;}
+.nav-logo .dot{width:7px;height:7px;border-radius:50%;background:var(--accent); box-shadow:0 0 10px var(--accent);}
+.nav-links{display:flex; gap:30px; align-items:center;}
+.nav-links a{color:var(--text-dim); text-decoration:none; font-size:14.5px; font-weight:500; transition:color .2s;}
+.nav-links a:hover, .nav-links a.active{color:var(--text);}
+.nav-right{display:flex; align-items:center; gap:14px;}
+.lang-toggle{
+  background:var(--glass-fill-strong); border:1px solid var(--glass-border-strong);
+  color:var(--text); font-size:13px; font-weight:600; padding:7px 14px; border-radius:100px;
+  cursor:pointer; font-family:inherit; transition:all .2s;
+}
+.lang-toggle:hover{border-color:var(--accent); color:var(--accent);}
+.nav-cta{
+  background:var(--accent); color:#0A0A0A; font-weight:700; font-size:13.5px;
+  padding:9px 18px; border-radius:100px; text-decoration:none; transition:all .2s;
+  box-shadow:0 0 0 0 rgba(157,255,46,0.4);
+}
+.nav-cta:hover{box-shadow:0 0 24px 0 rgba(157,255,46,0.5); transform:translateY(-1px);}
+.nav-burger{display:none; background:none; border:none; color:var(--text); cursor:pointer;}
+@media(max-width:820px){
+  .nav-links{display:none;}
+  .nav-burger{display:block;}
+}
+
+/* mobile drawer */
+.mobile-drawer{
+  position:fixed; inset:0; z-index:99; background:rgba(8,8,8,0.92); -webkit-backdrop-filter:blur(20px); backdrop-filter:blur(20px);
+  display:none; flex-direction:column; align-items:center; justify-content:center; gap:28px;
+}
+.mobile-drawer.open{display:flex;}
+.mobile-drawer a{color:var(--text); font-size:24px; font-weight:700; text-decoration:none;}
+.mobile-drawer .close-btn{position:absolute; top:28px; right:28px; background:none; border:none; color:var(--text); font-size:28px; cursor:pointer;}
+
+/* ===== Sections base ===== */
+.page-section{display:none;}
+.page-section.active{display:block;}
+
+/* ===== Hero ===== */
+.hero{padding:170px 0 100px; position:relative;}
+.hero-eyebrow{
+  display:inline-flex; align-items:center; gap:8px;
+  color:var(--accent); font-size:13px; font-weight:600; letter-spacing:0.04em;
+  margin-bottom:28px; padding:7px 16px; border-radius:100px;
+}
+.hero-eyebrow .pulse{width:6px;height:6px;border-radius:50%;background:var(--accent); animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+.hero h1{
+  font-size:clamp(42px, 6.4vw, 84px); font-weight:800; line-height:1.12; letter-spacing:-0.025em;
+  max-width:880px; margin-bottom:28px;
+}
+.hero h1 .accent-word{color:var(--accent);}
+.hero-sub{
+  font-size:clamp(17px, 1.6vw, 20px); color:var(--text-dim); max-width:560px; line-height:1.6; margin-bottom:44px; font-weight:400;
+}
+.hero-ctas{display:flex; gap:14px; margin-bottom:80px; flex-wrap:wrap;}
+.btn-primary{
+  background:var(--accent); color:#0A0A0A; font-weight:700; font-size:15px;
+  padding:15px 28px; border-radius:100px; text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+  transition:all .25s; border:none; cursor:pointer; font-family:inherit;
+}
+.btn-primary:hover{box-shadow:0 0 30px rgba(157,255,46,0.45); transform:translateY(-2px);}
+.btn-secondary{
+  color:var(--text); font-weight:600; font-size:15px; padding:15px 28px; border-radius:100px;
+  text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:all .25s;
+}
+.btn-secondary:hover{border-color:var(--glass-border-strong); background:var(--glass-fill-strong);}
+
+/* stat row */
+.stat-row{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; border-radius:var(--radius-lg); overflow:hidden;}
+.stat-cell{padding:32px 28px; position:relative;}
+.stat-cell:not(:last-child){border-right:1px solid var(--glass-border);}
+.stat-num{font-size:clamp(34px,4vw,52px); font-weight:800; color:var(--text); letter-spacing:-0.02em; line-height:1; display:flex; align-items:baseline; gap:4px;}
+.stat-num .accent{color:var(--accent);}
+.stat-label{color:var(--text-dim); font-size:13.5px; margin-top:10px; line-height:1.4;}
+@media(max-width:720px){
+  .stat-row{grid-template-columns:1fr;}
+  .stat-cell:not(:last-child){border-right:none; border-bottom:1px solid var(--glass-border);}
+}
+
+/* ===== Section heading pattern ===== */
+.section-head{margin-bottom:56px; max-width:680px;}
+.section-eyebrow{color:var(--accent); font-size:13px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:16px; display:block;}
+.section-head h2{font-size:clamp(30px,3.6vw,44px); font-weight:800; letter-spacing:-0.02em; line-height:1.15; margin-bottom:16px;}
+.section-head p{color:var(--text-dim); font-size:16.5px; line-height:1.6;}
+.section-pad{padding:110px 0;}
+.section-pad-sm{padding:70px 0;}
+@media(max-width:680px){
+  .section-pad{padding:70px 0;}
+  .section-pad-sm{padding:50px 0;}
+  .wrap{padding-left:20px !important; padding-right:20px !important;}
+  .case-study .wrap{padding-top:100px !important;}
+  .glass-strong,[class*="glass"]{padding-left:20px !important; padding-right:20px !important;}
+}
+
+/* ===== Trust bar ===== */
+.trust-bar{padding:50px 0; border-top:1px solid var(--glass-border); border-bottom:1px solid var(--glass-border);}
+.trust-label{color:var(--text-faint); font-size:12.5px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:26px; text-align:center;}
+.trust-logos{display:flex; flex-wrap:wrap; justify-content:center; gap:14px;}
+.trust-pill{
+  padding:10px 20px; border-radius:100px; color:var(--text-dim); font-size:14px; font-weight:600;
+  white-space:nowrap;
+}
+
+/* ===== Work cards ===== */
+.work-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+@media(max-width:920px){.work-grid{grid-template-columns:1fr;}}
+.work-card{
+  border-radius:var(--radius-lg); overflow:hidden; text-decoration:none; color:var(--text);
+  display:flex; flex-direction:column; transition:transform .3s, border-color .3s; cursor:pointer;
+}
+.work-card:hover{transform:translateY(-6px); border-color:var(--glass-border-strong);}
+.work-visual{
+  height:220px; position:relative; overflow:hidden;
+  display:flex; align-items:center; justify-content:center;
+}
+.work-visual .ph-label{color:var(--text-faint); font-size:12px; letter-spacing:0.05em; text-transform:uppercase; font-weight:600;}
+.work-tag{
+  position:absolute; top:16px; left:16px; background:rgba(10,10,10,0.6); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+  color:var(--accent); font-size:11.5px; font-weight:700; padding:6px 12px; border-radius:100px; border:1px solid rgba(157,255,46,0.3);
+  letter-spacing:0.03em;
+}
+.work-body{padding:24px 26px 28px;}
+.work-body h3{font-size:19px; font-weight:700; margin-bottom:8px; letter-spacing:-0.01em;}
+.work-body p{color:var(--text-dim); font-size:14.5px; line-height:1.55;}
+.work-result{
+  margin-top:16px; padding-top:16px; border-top:1px solid var(--glass-border);
+  color:var(--accent); font-size:14px; font-weight:700; display:flex; align-items:center; gap:6px;
+}
+
+/* ===== Closing CTA band ===== */
+.cta-band{
+  border-radius:var(--radius-lg); padding:64px 48px; text-align:center; margin:0 0 30px;
+  position:relative; overflow:hidden;
+}
+.cta-band::before{
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse 500px 300px at 50% 0%, rgba(157,255,46,0.1), transparent 70%);
+}
+.cta-band h2{font-size:clamp(26px,3vw,38px); font-weight:800; margin-bottom:14px; letter-spacing:-0.02em; position:relative;}
+.cta-band p{color:var(--text-dim); font-size:16px; margin-bottom:32px; position:relative;}
+.cta-band .ctas{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; position:relative;}
+
+/* ===== Footer ===== */
+footer{padding:50px 0 40px; border-top:1px solid var(--glass-border); margin-top:40px;}
+.footer-inner{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;}
+.footer-left{color:var(--text-faint); font-size:13.5px;}
+.footer-right{display:flex; gap:24px;}
+.footer-right a{color:var(--text-dim); text-decoration:none; font-size:13.5px; transition:color .2s;}
+.footer-right a:hover{color:var(--accent);}
+
+/* ===== Reveal animation ===== */
+.reveal{opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease;}
+.reveal.in{opacity:1; transform:translateY(0);}
+
+/* RTL specific */
+body.lang-ar{direction:rtl;}
+body.lang-ar .stat-cell:not(:last-child){border-right:none; border-left:1px solid var(--glass-border);}
+body.lang-ar .nav-links{direction:rtl;}
+
+/* ===== Priority clients grid ===== */
+.priority-clients{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:14px;
+  margin-bottom:36px;
+}
+@media(max-width:900px){.priority-clients{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:540px){.priority-clients{grid-template-columns:repeat(2,1fr);}}
+
+.priority-logo{
+  display:flex; align-items:center; justify-content:center;
+  padding:18px 20px;
+  border-radius:var(--radius-md);
+  border:1px solid var(--glass-border);
+  background:var(--glass-fill);
+  -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px);
+  min-height:80px;
+  transition:border-color .25s, background .25s;
+}
+.priority-logo:hover{
+  border-color:var(--glass-border-strong);
+  background:var(--glass-fill-strong);
+}
+.priority-logo img{
+  width:100%; max-width:110px; height:44px;
+  object-fit:contain; display:block;
+  filter:brightness(0) invert(1);
+  opacity:0.8;
+  transition:opacity .25s;
+}
+.priority-logo:hover img{opacity:1;}
+
+/* ===== Clients ticker (scrolling strip) ===== */
+.clients-ticker-wrap{
+  overflow:hidden;
+  -webkit-mask-image:linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  mask-image:linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+.clients-ticker{
+  display:flex; gap:12px; align-items:center;
+  width:max-content;
+  animation:tickerScroll 30s linear infinite;
+}
+.clients-ticker:hover{animation-play-state:paused;}
+@keyframes tickerScroll{
+  0%{transform:translateX(0);}
+  100%{transform:translateX(-50%);}
+}
+.client-logo-pill{
+  display:flex; align-items:center; justify-content:center;
+  padding:12px 22px;
+  border-radius:100px;
+  border:1px solid var(--glass-border);
+  background:var(--glass-fill);
+  -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+  white-space:nowrap; flex-shrink:0;
+  transition:border-color .25s;
+}
+.client-logo-pill:hover{border-color:var(--glass-border-strong);}
+.client-logo-pill img{
+  height:28px; width:auto; max-width:100px;
+  object-fit:contain; display:block;
+  filter:brightness(0) invert(1);
+  opacity:0.7;
+  transition:opacity .25s;
+}
+.client-logo-pill:hover img{opacity:1;}
+</style>
+</head>
+<body>
+
+<div class="ambient"></div>
+<div class="noise"></div>
+
+<!-- ===== NAV ===== -->
+<nav class="nav glass-strong">
+  <a href="#home" class="nav-logo" data-route="home"><img src="assets/logo/logo.svg" onerror="this.src='assets/logo/logo.png'" alt="Yasir Darwish" style="height:32px; width:auto; filter:brightness(0) invert(1);"></a>
+  <div class="nav-links">
+    <a href="#home" data-route="home" data-en="Home" data-ar="الرئيسية">Home</a>
+    <a href="#work" data-route="work" data-en="Work" data-ar="أعمالي">Work</a>
+    <a href="#about" data-route="about" data-en="About Me" data-ar="نبذة عني">About</a>
+    <a href="#skills" data-route="skills" data-en="Skills" data-ar="ماذا أقدم">Skills</a>
+    <a href="#experience" data-route="experience" data-en="Experience" data-ar="الخبرات">Experience</a>
+  </div>
+  <div class="nav-right">
+    <button class="lang-toggle" id="langToggle">العربية</button>
+    <a href="#contact" data-route="contact" class="nav-cta" data-en="Contact" data-ar="تواصل">Contact</a>
+    <button class="nav-burger" id="burgerBtn">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-drawer" id="mobileDrawer">
+  <button class="close-btn" id="closeDrawer">&times;</button>
+  <a href="#home" data-route="home" data-en="Home" data-ar="الرئيسية">Home</a>
+  <a href="#work" data-route="work" data-en="Work" data-ar="الأعمال">Work</a>
+  <a href="#about" data-route="about" data-en="About" data-ar="نبذة">About</a>
+  <a href="#skills" data-route="skills" data-en="Skills" data-ar="المهارات">Skills</a>
+  <a href="#experience" data-route="experience" data-en="Experience" data-ar="الخبرات">Experience</a>
+  <a href="#contact" data-route="contact" data-en="Contact" data-ar="تواصل معي">Contact</a>
+</div>
+
+<main>
+
+<!-- ================= HOME ================= -->
+<section class="page-section active" id="home">
+  <div class="wrap">
+    <div class="hero">
+      <div class="hero-eyebrow glass"><span class="pulse"></span>
+        <span data-en="Open to roles & select freelance" data-ar="متاح حالياً للمشاريع الحرة والفرص المهنية المختارة">Open to roles &amp; select freelance</span>
+      </div>
+      <h1 class="reveal" id="heroHeadline">I Build Brands That Grow &mdash;<br><span class="accent-word">Strategically and Visually.</span></h1>
+      <p class="hero-sub reveal" data-en="Marketing Specialist and Creative Director blending performance marketing, brand strategy, and hands-on motion and design. Experienced in delivering high-impact solutions for Saudi Arabia's leading agencies and enterprises." data-ar="بداية من الاستراتيجية إلى التنفيذ. أخصائي تسويق ومدير إبداعي يربط بين التسويق الفعال والسرد البصري للعلامات التجارية، مستنداً إلى خبرة واسعة مع أبرز المؤسسات والعلامات التجارية في المملكة العربية السعودية وخارجها.">Marketing Specialist &amp; Creative Director combining performance marketing, brand strategy, and hands-on design &amp; motion execution. Based in Egypt, built across Saudi Arabia's top agencies and enterprises.</p>
+      <div class="hero-ctas reveal">
+        <a href="#work" data-route="work" class="btn-primary">
+          <span data-en="View My Work" data-ar="شاهد أعمالي">View My Work</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a href="#contact" data-route="contact" class="btn-secondary glass">
+          <span data-en="Let's Talk" data-ar="لنتحدث">Let's Talk</span>
+        </a>
+      </div>
+      <div class="stat-row glass reveal">
+        <div class="stat-cell">
+          <div class="stat-num">240%<span class="accent">+</span></div>
+          <div class="stat-label" data-en="Sales growth driven at Santorio through full-funnel rebuild" data-ar="نمو في المبيعات لدى أحد المطاعم الصحية في المملكة من خلال إعادة بناء كاملة للقمع التسويقي">Sales growth driven at Santorio through full-funnel rebuild</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-num">718K<span class="accent">+</span></div>
+          <div class="stat-label" data-en="SAR revenue from a ~5K/month total marketing budget" data-ar="ريال سعودي عوائد من ميزانية تسويقية بإجمالي ~5 آلاف ريال شهرياً لأحد العملاء">SAR revenue from a ~5K/month total marketing budget</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-num">30<span class="accent">+</span></div>
+          <div class="stat-label" data-en="Enterprise &amp; government clients across Saudi Arabia" data-ar="عميل من المؤسسات والجهات الحكومية في السعودية وخارجها">Enterprise &amp; government clients across Saudi Arabia</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="trust-bar">
+    <div class="wrap">
+      <div class="trust-label" data-en="Trusted by leading Saudi enterprises &amp; institutions" data-ar="عملاء عملت معهم ولهم">موثوق من قبل كبرى المؤسسات والجهات السعودية</div>
+
+      <!-- Priority clients: fixed glass grid -->
+      <div class="priority-clients">
+        <div class="priority-logo glass"><img src="assets/clients-priority/acwapower.png" alt="AcwaPower"></div>
+        <div class="priority-logo glass"><img src="assets/clients-priority/mewa.png" alt="Ministry of Environment"></div>
+        <div class="priority-logo glass"><img src="assets/clients-priority/sba.png" alt="Saudi Broadcasting Authority"></div>
+        <div class="priority-logo glass"><img src="assets/clients-priority/saudi-golf-federation.png" alt="Saudi Golf Federation"></div>
+        <div class="priority-logo glass"><img src="assets/clients-priority/kidana.png" alt="Kidana"></div>
+        <div class="priority-logo glass"><img src="assets/clients-priority/aramco-ladies.png" alt="Aramco Saudi Ladies"></div>
+        <div class="priority-logo glass"><img src="assets/clients-priority/golf-saudi.png" alt="Golf Saudi"></div>
+        <div class="priority-logo glass"><img src="assets/clients-priority/ewax.png" alt="EWAx"></div>
+        <div class="priority-logo glass"><img src="assets/clients-priority/g92.png" alt="G92"></div>
+        <div class="priority-logo glass"><img src="assets/clients-priority/dar-al-hekma.png" alt="Dar Al-Hekma University"></div>
+      </div>
+
+      <!-- Regular clients: infinite scrolling ticker -->
+      <div class="clients-ticker-wrap">
+        <div class="clients-ticker" id="clientsTicker">
+          <div class="client-logo-pill glass"><img src="assets/clients/zaini-studio.png" alt="Zaini Studio"></div>
+          <div class="client-logo-pill glass"><img src="assets/clients/santorio.png" alt="Santorio"></div>
+          <div class="client-logo-pill glass"><img src="assets/clients/dirab-golf.png" alt="Dirab Golf &amp; Country Club"></div>
+          <div class="client-logo-pill glass"><img src="assets/clients/arena-mall.png" alt="Arena Mall"></div>
+          <div class="client-logo-pill glass"><img src="assets/clients/lap-media.png" alt="LAP Media"></div>
+          <div class="client-logo-pill glass"><img src="assets/clients/sadeen-living.png" alt="Sadeen Living"></div>
+          <div class="client-logo-pill glass"><img src="assets/clients/first-specialist.png" alt="First Specialist Medical Clinics"></div>
+          <div class="client-logo-pill glass"><img src="assets/clients/marvel-clinic.png" alt="Marvel Clinic"></div>
+          <div class="client-logo-pill glass"><img src="assets/clients/flustrey.png" alt="Flustrey"></div>
+          <div class="client-logo-pill glass"><img src="assets/clients/musa-al-mutairi.png" alt="Musa Al-Mutairi"></div>
+          <div class="client-logo-pill glass"><img src="assets/clients/aic.png" alt="Architectural Interface Company"></div>
+          <div class="client-logo-pill glass"><img src="assets/clients/towers-face.png" alt="Towers Face Company"></div>
+          <div class="client-logo-pill glass"><img src="assets/clients/mustawayat.png" alt="Mustawayat Al-Aqariya"></div>
+          <div class="client-logo-pill glass"><img src="assets/clients/adeeb-signage.png" alt="Adeeb Signage"></div>
+          <!-- Duplicate set for seamless loop -->
+          <div class="client-logo-pill glass"><img src="assets/clients/zaini-studio.png" alt="Zaini Studio"></div>
+          <div class="client-logo-pill glass"><img src="assets/clients/santorio.png" alt="Santorio"></div>
+          <div class="client-logo-pill glass"><img src="assets/clients/dirab-golf.png" alt="Dirab Golf &amp; Country Club"></div>
+          <div class="client-logo-pill glass"><img src="assets/clients/arena-mall.png" alt="Arena Mall"></div>
+          <div class="client-logo-pill glass"><img src="assets/clients/lap-media.png" alt="LAP Media"></div>
+          <div class="client-logo-pill glass"><img src="assets/clients/sadeen-living.png" alt="Sadeen Living"></div>
+          <div class="client-logo-pill glass"><img src="assets/clients/first-specialist.png" alt="First Specialist Medical Clinics"></div>
+          <div class="client-logo-pill glass"><img src="assets/clients/marvel-clinic.png" alt="Marvel Clinic"></div>
+          <div class="client-logo-pill glass"><img src="assets/clients/flustrey.png" alt="Flustrey"></div>
+          <div class="client-logo-pill glass"><img src="assets/clients/musa-al-mutairi.png" alt="Musa Al-Mutairi"></div>
+          <div class="client-logo-pill glass"><img src="assets/clients/aic.png" alt="Architectural Interface Company"></div>
+          <div class="client-logo-pill glass"><img src="assets/clients/towers-face.png" alt="Towers Face Company"></div>
+          <div class="client-logo-pill glass"><img src="assets/clients/mustawayat.png" alt="Mustawayat Al-Aqariya"></div>
+          <div class="client-logo-pill glass"><img src="assets/clients/adeeb-signage.png" alt="Adeeb Signage"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section-pad">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="section-eyebrow" data-en="Selected Work" data-ar="أعمال مختارة">Selected Work</span>
+        <h2 data-en="Proof, not promises." data-ar="خبرات مثبتة، ونتائج ملموسة">Proof, not promises.</h2>
+        <p data-en="From F&amp;B growth marketing to national cultural programs — here's the work behind the numbers." data-ar="من التسويق النمائي للمطاعم إلى البرامج الثقافية الوطنية — هذه هي القصص الكامنة خلف الأرقام.">From F&amp;B growth marketing to national cultural programs — here's the work behind the numbers.</p>
+      </div>
+      <div class="work-grid reveal">
+        <a class="work-card glass" data-route="case-santorio" href="#case-santorio">
+          <div class="work-visual" style="background:#0a0a0a; overflow:hidden;">
+            <span class="work-tag" data-en="Growth Marketing" data-ar="تسويق نمائي وإدارة كاملة">تسويق نمائي</span>
+            <img src="assets/projects/santorio/santorio-cover.png" alt="Santorio" style="width:100%;height:100%;object-fit:cover;display:block;">
+          </div>
+          <div class="work-body">
+            <h3 data-en="Santorio" data-ar="سانتوريو">Santorio</h3>
+            <p data-en="Full-funnel growth engine for a healthy meal subscription brand." data-ar="بناء كامل لمحرك نمو لعلامة تجارية للوجبات الصحية بالاشتراك.">Full-funnel growth engine for a healthy meal subscription brand.</p>
+            <div class="work-result"><span data-en="240%+ sales growth →" data-ar="نمو 240%+ في المبيعات ←">240%+ sales growth →</span></div>
+          </div>
+        </a>
+        <a class="work-card glass" data-route="case-ewax" href="#case-ewax">
+          <div class="work-visual" style="background:#0a0a0a; overflow:hidden;">
+            <span class="work-tag" data-en="Creative Direction" data-ar="إدارة إبداعية وتصميم">إدارة إبداعية</span>
+            <img src="assets/projects/ewax/ewax-header.png" alt="EWAx" style="width:100%;height:100%;object-fit:cover;display:block;">
+          </div>
+          <div class="work-body">
+            <h3 data-en="EWAx Forum" data-ar="ملتقى إيواكس">EWAx Forum</h3>
+            <p data-en="National-scale visual identity for a government investment forum." data-ar="هوية بصرية على المستوى الوطني لملتقى استثماري حكومي.">National-scale visual identity for a government investment forum.</p>
+            <div class="work-result"><span data-en="Ministry-level delivery →" data-ar="إدارة للتواصل الحكومي ←">Ministry-level delivery →</span></div>
+          </div>
+        </a>
+        <a class="work-card glass" data-route="case-acwapower" href="#case-acwapower">
+          <div class="work-visual" style="background:#0a0a0a; overflow:hidden;">
+            <span class="work-tag" data-en="Design &amp; Illustrations" data-ar="رسم وتصميم ">تصميم وموشن</span>
+            <img src="assets/projects/acwapower/final/1.png" alt="AcwaPower" style="width:100%;height:100%;object-fit:cover;display:block;">
+          </div>
+          <div class="work-body">
+            <h3 data-en="AcwaPower" data-ar="أكوا باور">AcwaPower</h3>
+            <p data-en="Full illustration-to-animation pipeline for an enterprise explainer film." data-ar="رسم وتصميم متكامل لفيديو موشن جرافيك لأكوا باور للطاقة">Full illustration-to-animation pipeline for an enterprise explainer film.</p>
+            <div class="work-result"><span data-en="Enterprise-grade motion →" data-ar="موشن بمعايير مؤسسية ←">Enterprise-grade motion →</span></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="cta-band glass-strong reveal">
+      <h2 data-en="Looking for a marketer who can also design the deliverable?" data-ar="تحتاج إلى مسوّق يجمع بين الرؤية التسويقية وتنفيذ المُخرج البصري النهائي؟">Looking for a marketer who can also design the deliverable?</h2>
+      <p data-en="Open to collaborations, freelance projects, and select professional opportunities." data-ar="أستقبل حالياً طلبات المشاريع الحرة المختارة والشراكات وفرص العمل الاستراتيجية">Open to full-time marketing/creative leadership roles and select freelance partnerships.</p>
+      <div class="ctas">
+        <a href="https://linkedin.com" target="_blank" class="btn-primary"><span data-en="View LinkedIn" data-ar="زيارة لينكدإن">View LinkedIn</span></a>
+        <a href="mailto:m.yasirdarwish@gmail.com" class="btn-secondary glass"><span data-en="Email Me" data-ar="راسلني">Email Me</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= WORK (listing) ================= -->
+<section class="page-section" id="work">
+  <div class="wrap section-pad" style="padding-top:160px;">
+    <div class="section-head reveal">
+      <span class="section-eyebrow" data-en="Case Studies" data-ar="أعمال مختارة">Case Studies</span>
+      <h2 data-en="Work, filtered by lens." data-ar="الأعمال .. مصنّفة حسب التخصص.">Work, filtered by lens.</h2>
+      <p data-en="Whether you're hiring for marketing, media buying, creative direction, or design — each project below is tagged so you can find the proof that matters to you." data-ar="سواء كنت تبحث عن مسوق متخصص، ميديا باير، مدير إبداعي، أو حتى مصمم — كل مشروع أدناه مصنّف لتجد الدليل الذي يهمك.">Whether you're hiring for marketing, media buying, creative direction, or design — each project below is tagged so you can find the proof that matters to you.</p>
+    </div>
+
+    <div class="work-grid reveal" style="margin-bottom:24px;">
+      <a class="work-card glass" data-route="case-santorio" href="#case-santorio">
+        <div class="work-visual" style="background:linear-gradient(135deg,#1a2e0f,#0a0a0a);">
+          <span class="work-tag" data-en="Growth Marketing" data-ar="تسويق نمائي">Growth Marketing</span>
+          <span class="ph-label" data-en="[ Santorio visuals ]" data-ar="[ صور سانتوريو ]">[ Santorio visuals ]</span>
+        </div>
+        <div class="work-body">
+          <h3 data-en="Santorio — Rebuilding a Growth Engine From Zero" data-ar="سانتوريو — إعادة بناء محرك نمو من الصفر">Santorio — Rebuilding a Growth Engine From Zero</h3>
+          <p data-en="Salla store build, GTM/GA4/Clarity tracking, persona-based ad segmentation, organic SEO #1." data-ar="بناء متجر سلة، تتبع GTM/GA4/Clarity، تقسيم إعلانات حسب البيرسونا، تصدّر SEO عضوي.">Salla store build, GTM/GA4/Clarity tracking, persona-based ad segmentation, organic SEO #1.</p>
+          <div class="work-result"><span data-en="240%+ growth · 718K+ SAR →" data-ar="نمو 240%+ · 718 ألف+ ريال ←">240%+ growth · 718K+ SAR →</span></div>
+        </div>
+      </a>
+      <a class="work-card glass" data-route="case-asmara" href="#case-asmara">
+        <div class="work-visual" style="background:linear-gradient(135deg,#241a0d,#0a0a0a); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px;">
+          <span class="work-tag" style="position:static;" data-en="Operations &amp; Leadership" data-ar="عمليات وقيادة">عمليات وقيادة</span>
+          <span style="color:var(--text-faint); font-size:11px; letter-spacing:0.05em;">ASMARA AGENCY</span>
+        </div>
+        <div class="work-body">
+          <h3 data-en="Asmara Agency — From Biz Dev to De Facto GM" data-ar="وكالة أسمرة — من تطوير الأعمال إلى مدير عام بالفعل">Asmara Agency — From Biz Dev to De Facto GM</h3>
+          <p data-en="Founded a design dept, rebuilt org structure, built the agency's first HR function." data-ar="تأسيس قسم تصميم، إعادة هيكلة المؤسسة، بناء أول وظيفة موارد بشرية للوكالة.">Founded a design dept, rebuilt org structure, built the agency's first HR function.</p>
+          <div class="work-result"><span data-en="Appointed admin co-lead →" data-ar="تعيين كمدير إداري مشارك ←">Appointed admin co-lead →</span></div>
+        </div>
+      </a>
+      <a class="work-card glass" data-route="case-shaer" href="#case-shaer">
+        <div class="work-visual" style="background:#0a0a0a; overflow:hidden;">
+          <span class="work-tag" data-en="Creative Direction" data-ar="إدارة إبداعية">إدارة إبداعية</span>
+          <img src="assets/projects/shaer/shaer-banner.jpg" alt="Sha'er Al-Raya" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="work-body">
+          <h3 data-en="Sha'er Al-Raya — National Visibility Creative Direction" data-ar="شاعر الراية — إدارة إبداعية بظهور وطني">Sha'er Al-Raya — National Visibility Creative Direction</h3>
+          <p data-en="Recruited &amp; directed the production team for SBA's Season 4 cultural broadcast." data-ar="استقطاب وإدارة فريق الإنتاج للموسم الرابع من برنامج هيئة الإذاعة والتلفزيون.">Recruited &amp; directed the production team for SBA's Season 4 cultural broadcast.</p>
+          <div class="work-result"><span data-en="Praised by program management →" data-ar="حظي بإشادة إدارة البرنامج ←">Praised by program management →</span></div>
+        </div>
+      </a>
+      <a class="work-card glass" data-route="case-acwapower" href="#case-acwapower">
+        <div class="work-visual" style="background:#0a0a0a; overflow:hidden;">
+          <span class="work-tag" data-en="Design &amp; Motion" data-ar="تصميم وموشن">تصميم وموشن</span>
+          <img src="assets/projects/acwapower/final/1.png" alt="AcwaPower" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="work-body">
+          <h3 data-en="AcwaPower — Illustration to Animation Pipeline" data-ar="أكوا باور — من الرسم إلى خط إنتاج التحريك">AcwaPower — Illustration to Animation Pipeline</h3>
+          <p data-en="Storyboard, frame design, and full visual style for an enterprise motion film." data-ar="ستوري بورد، تصميم فريمات، وأسلوب بصري كامل لفيلم موشن لمؤسسة عملاقة.">Storyboard, frame design, and full visual style for an enterprise motion film.</p>
+          <div class="work-result"><span data-en="Full production pipeline →" data-ar="خط إنتاج متكامل ←">Full production pipeline →</span></div>
+        </div>
+      </a>
+      <a class="work-card glass" data-route="case-ewax" href="#case-ewax">
+        <div class="work-visual" style="background:#0a0a0a; overflow:hidden;">
+          <span class="work-tag" data-en="Creative Direction" data-ar="إدارة إبداعية">إدارة إبداعية</span>
+          <img src="assets/projects/ewax/ewax-infographic2.png" alt="EWAx" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="work-body">
+          <h3 data-en="EWAx Forum — Government Visual Identity at Scale" data-ar="ملتقى إيواكس — هوية بصرية حكومية على نطاق وطني">EWAx Forum — Government Visual Identity at Scale</h3>
+          <p data-en="Visual identity and creative production for the Ministry's investment forum." data-ar="الهوية البصرية والإنتاج الإبداعي لملتقى الوزارة الاستثماري.">Visual identity and creative production for the Ministry's investment forum.</p>
+          <div class="work-result"><span data-en="Promotional + brand system →" data-ar="مواد ترويجية + نظام هوية ←">Promotional + brand system →</span></div>
+        </div>
+      </a>
+      <a class="work-card glass" data-route="case-kidana" href="#case-kidana">
+        <div class="work-visual" style="background:#0a0a0a; overflow:hidden;">
+          <span class="work-tag" data-en="Social &amp; Civic Media" data-ar="إعلام مؤسسي">إعلام مؤسسي</span>
+          <img src="assets/projects/kidana/kidana-wadi.png" alt="Kidana" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="work-body">
+          <h3 data-en="Kidana — Holy Sites Social Content Direction" data-ar="كدانة — إدارة المحتوى لتطوير المشاعر المقدسة">Kidana — Holy Sites Social Content Direction</h3>
+          <p data-en="Social media content production for Saudi Arabia's Holy Sites development." data-ar="إنتاج محتوى التواصل الاجتماعي لتطوير المشاعر المقدسة في السعودية.">Social media content production for Saudi Arabia's Holy Sites development.</p>
+          <div class="work-result"><span data-en="Civic-scale content system →" data-ar="نظام محتوى بحجم وطني ←">Civic-scale content system →</span></div>
+        </div>
+      </a>
+      <a class="work-card glass" data-route="case-from-medinah" href="#case-from-medinah">
+        <div class="work-visual" style="background:#0a0a0a; overflow:hidden;">
+          <span class="work-tag" data-en="Heritage · Social Design" data-ar="تراث · تصميم رقمي">تراث · تصميم رقمي</span>
+          <img src="assets/projects/from-medinah/fm-01.png" alt="From Medinah" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="work-body">
+          <h3 data-en="From Medinah — Islamic Heritage Content" data-ar="من المدينة — محتوى التراث الإسلامي">From Medinah — Islamic Heritage Content</h3>
+          <p data-en="Personal project building the primary Arabic destination for Al Madinah heritage and history content." data-ar="مشروع شخصي لبناء الوجهة العربية الأولى لمحتوى تراث وتاريخ المدينة المنورة.">Personal project building the primary Arabic destination for Al Madinah heritage and history content.</p>
+          <div class="work-result"><span data-en="Heritage design system →" data-ar="نظام تصميم تراثي ←">Heritage design system →</span></div>
+        </div>
+      </a>
+      <a class="work-card glass" data-route="case-levels" href="#case-levels">
+        <div class="work-visual" style="background:#0a0a0a; overflow:hidden;">
+          <span class="work-tag" data-en="Real Estate · Social Design" data-ar="عقارات · تصميم رقمي">عقارات · تصميم رقمي</span>
+          <img src="assets/projects/levels/levels-01.jpg" alt="Levels Real Estates" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="work-body">
+          <h3 data-en="Levels Real Estates — Social Media Design" data-ar="Levels العقارية — تصميم سوشيال ميديا">Levels Real Estates — Social Media Design</h3>
+          <p data-en="Premium real estate social media visual identity for a GCC-facing property brand." data-ar="هوية بصرية راقية لسوشيال ميديا شركة عقارية موجهة لسوق الخليج.">Premium real estate social media visual identity for a GCC-facing property brand.</p>
+          <div class="work-result"><span data-en="Premium visual identity →" data-ar="هوية بصرية راقية ←">Premium visual identity →</span></div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+<!-- ================= CASE STUDY: SANTORIO ================= -->
+<section class="page-section case-study" id="case-santorio">
+  <div class="wrap section-pad" style="padding-top:160px; max-width:880px;">
+    <a href="#work" data-route="work" class="btn-secondary glass" style="margin-bottom:40px; display:inline-flex;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      <span data-en="All Work" data-ar="كل الأعمال">All Work</span>
+    </a>
+    <span class="work-tag" style="position:static; display:inline-block; margin-bottom:20px;" data-en="Growth Marketing · Media Buying · E-commerce" data-ar="تسويق نمائي · شراء إعلامي · تجارة إلكترونية">Growth Marketing · Media Buying · E-commerce</span>
+    <h1 style="font-size:clamp(32px,4.5vw,52px); font-weight:800; letter-spacing:-0.02em; margin-bottom:20px; line-height:1.1;" data-en="Santorio: Rebuilding a Growth Engine From Zero" data-ar="سانتوريو: إعادة بناء محرك نمو من الصفر">Santorio: Rebuilding a Growth Engine From Zero</h1>
+
+    <div class="glass-strong" style="padding:32px; border-radius:var(--radius-lg); margin:32px 0 48px;">
+      <p style="font-size:18px; line-height:1.6; font-style:italic; color:var(--text);" data-en="718,370 SAR in subscription revenue from a total monthly marketing budget of roughly 5,000 SAR — 3,000 of which went to Google Ads alone — alongside 240%+ overall sales growth and organic Instagram growth from under 1,000 to 6,000 followers in one year." data-ar="718,370 ريال سعودي عوائد اشتراكات من ميزانية تسويقية إجمالية شهرية حوالي 5,000 ريال — منها 3,000 ريال فقط على جوجل أدز — إلى جانب نمو إجمالي بنسبة تجاوزت 240% في المبيعات ونمو عضوي في متابعي انستجرام من أقل من 1,000 إلى 6,000 خلال سنة واحدة.">718,370 SAR in subscription revenue from a total monthly marketing budget of roughly 5,000 SAR — 3,000 of which went to Google Ads alone — alongside 240%+ overall sales growth and organic Instagram growth from under 1,000 to 6,000 followers in one year.</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:48px;">
+      <div style="grid-column:1/-1; border-radius:var(--radius-lg); overflow:hidden; height:340px;">
+        <img src="assets/projects/santorio/santorio-cover.png" alt="Santorio Cover" style="width:100%;height:100%;object-fit:cover;">
+      </div>
+      <div style="border-radius:var(--radius-md); overflow:hidden; height:200px;">
+        <img src="assets/projects/santorio/santorio-post1.png" alt="Santorio Campaign" style="width:100%;height:100%;object-fit:cover;">
+      </div>
+      <div style="border-radius:var(--radius-md); overflow:hidden; height:200px;">
+        <img src="assets/projects/santorio/santorio-post2.jpg" alt="Santorio Social Post" style="width:100%;height:100%;object-fit:cover;">
+      </div>
+    </div>
+
+    <h3 style="font-size:22px; font-weight:700; margin-bottom:14px;" data-en="Context" data-ar="السياق">Context</h3>
+    <p style="color:var(--text-dim); line-height:1.75; margin-bottom:36px; font-size:16px;" data-en="I joined Santorio in 2021, originally responsible for social media design, content, and paid media management. At the time, there was no marketing team — only the founders and the kitchen/operations staff. Santorio (a healthy meal subscription brand based in Jeddah and Makkah) had no real presence on social media, no organized subscription or menu management system, and no structured advertising." data-ar="انضممت إلى سانتوريو في 2021، وكنت مسؤولاً في البداية عن تصاميم السوشيال ميديا، المحتوى، وإدارة الإعلانات المدفوعة. في ذلك الوقت لم يكن هناك فريق تسويق، فقط المؤسسون وفريق المطابخ والعمليات. لم يكن لسانتوريو (علامة وجبات صحية بالاشتراك مقرها جدة ومكة) أي تواجد فعلي على السوشيال ميديا، ولا نظام منظم لإدارة الاشتراكات أو المنيوهات، ولا إعلانات منظمة.">I joined Santorio in 2021, originally responsible for social media design, content, and paid media management. At the time, there was no marketing team — only the founders and the kitchen/operations staff. Santorio (a healthy meal subscription brand based in Jeddah and Makkah) had no real presence on social media, no organized subscription or menu management system, and no structured advertising.</p>
+
+    <h3 style="font-size:22px; font-weight:700; margin-bottom:14px;" data-en="The Problem" data-ar="المشكلة">The Problem</h3>
+    <p style="color:var(--text-dim); line-height:1.75; margin-bottom:36px; font-size:16px;" data-en="Three compounding issues: the only sales lever the brand used was constant discounting, which eroded margins; there was no conversion tracking of any kind, so ad spend was effectively blind; and subscription/menu management for each client was manual and outdated, limiting how many customers the business could serve well." data-ar="ثلاث مشكلات متراكمة: الاعتماد الدائم على الخصومات كآلية بيع وحيدة مما قلّص الهوامش؛ غياب أي نوع من تتبع التحويلات، مما جعل الإعلانات تُدار بشكل عشوائي تماماً؛ وإدارة الاشتراكات والمنيوهات لكل عميل بشكل يدوي وقديم، مما حدّ من قدرة الشركة على خدمة عدد كبير من العملاء بكفاءة.">Three compounding issues: the only sales lever the brand used was constant discounting, which eroded margins; there was no conversion tracking of any kind, so ad spend was effectively blind; and subscription/menu management for each client was manual and outdated, limiting how many customers the business could serve well.</p>
+
+    <h3 style="font-size:22px; font-weight:700; margin-bottom:14px;" data-en="Strategy" data-ar="الاستراتيجية">Strategy</h3>
+    <p style="color:var(--text-dim); line-height:1.75; margin-bottom:20px; font-size:16px;" data-en="I built a fully integrated Salla e-commerce store, allowing customers to select subscription plans and complete payment without manual back-and-forth. I connected the store to every advertising platform for accurate conversion measurement, and layered in Google Tag Manager, Google Analytics, and Microsoft Clarity for heatmap and session analysis to continuously improve the purchase flow." data-ar="قمت ببناء متجر إلكتروني متكامل على منصة سلة، يتيح للعميل اختيار باقة الاشتراك وإتمام الدفع دون أي تعقيد يدوي. ربطت المتجر بجميع المنصات الإعلانية لقياس دقيق للتحويلات، وأضفت جوجل تاج مانجر وجوجل أناليتكس وأداة Microsoft Clarity لتحليل الخرائط الحرارية وتحسين مسار الشراء باستمرار.">I built a fully integrated Salla e-commerce store, allowing customers to select subscription plans and complete payment without manual back-and-forth. I connected the store to every advertising platform for accurate conversion measurement, and layered in Google Tag Manager, Google Analytics, and Microsoft Clarity for heatmap and session analysis to continuously improve the purchase flow.</p>
+    <p style="color:var(--text-dim); line-height:1.75; margin-bottom:36px; font-size:16px;" data-en="On acquisition, I built an always-on Google Ads campaign alongside ongoing SEO work — eventually reaching the #1 organic search position in Jeddah and Makkah without paid promotion. I built customer personas from existing data, broke down every subscription package, and assigned each its own targeted audience, content identity, and custom ad creative — rather than running one generic campaign for the whole brand." data-ar="في جانب الاستقطاب، أنشأت حملة دائمة على جوجل أدز إلى جانب عمل مستمر على السيو — حتى وصل الموقع للمركز الأول في نتائج البحث العضوية في جدة ومكة دون أي ترويج مدفوع. بنيت بيرسونا للعملاء من البيانات الحالية، وحللت كل باقة اشتراك على حدة، وخصصت لكل باقة جمهورها المستهدف وهويتها البصرية ومحتواها الإعلاني الخاص — بدلاً من حملة عامة واحدة لكل العلامة التجارية.">On acquisition, I built an always-on Google Ads campaign alongside ongoing SEO work — eventually reaching the #1 organic search position in Jeddah and Makkah without paid promotion. I built customer personas from existing data, broke down every subscription package, and assigned each its own targeted audience, content identity, and custom ad creative — rather than running one generic campaign for the whole brand.</p>
+
+    <h3 style="font-size:22px; font-weight:700; margin-bottom:14px;" data-en="Execution &amp; Growth Loop" data-ar="التنفيذ وحلقة النمو">Execution &amp; Growth Loop</h3>
+    <p style="color:var(--text-dim); line-height:1.75; margin-bottom:36px; font-size:16px;" data-en="Each campaign fed into a feedback loop: I gave customer service guidelines for upselling and feedback capture, which fed back into creative and targeting decisions. Pricing was restructured gradually and professionally — moving away from constant discounting toward seasonal promotions only, while protecting loyal customers with long-term subscription discounts. As the brand stabilized, I helped build a dedicated social team, then shifted focus to new growth channels: a partnership with Saudia Airlines' 'Mazaya' program, and a full integration with the Yumealz app, where I personally managed packages, photography, UI design, and coordination with their technical team." data-ar="كل حملة كانت تغذي حلقة تحسين مستمرة: زوّدت فريق خدمة العملاء بإرشادات للبيع الإضافي وجمع الملاحظات، والتي كانت تُغذّي القرارات الإبداعية والاستهدافية. أعيد بناء التسعير بشكل تدريجي ومهني — بالتحول من الخصومات الدائمة إلى عروض موسمية فقط، مع حماية العملاء المخلصين عبر خصومات للاشتراكات طويلة المدى. ومع استقرار العلامة، ساهمت في بناء فريق سوشيال ميديا متخصص، وانتقلت للتركيز على قنوات نمو جديدة: شراكة مع برنامج 'مزايا' التابع للخطوط السعودية، وتكامل كامل مع تطبيق Yumealz حيث أدرت بنفسي الباقات والتصوير وتصميم الواجهة والتنسيق مع الفريق التقني.">Each campaign fed into a feedback loop: I gave customer service guidelines for upselling and feedback capture, which fed back into creative and targeting decisions. Pricing was restructured gradually and professionally — moving away from constant discounting toward seasonal promotions only, while protecting loyal customers with long-term subscription discounts. As the brand stabilized, I helped build a dedicated social team, then shifted focus to new growth channels: a partnership with Saudia Airlines' 'Mazaya' program, and a full integration with the Yumealz app, where I personally managed packages, photography, UI design, and coordination with their technical team.</p>
+
+    <h3 style="font-size:22px; font-weight:700; margin-bottom:14px;" data-en="Obstacles" data-ar="التحديات">Obstacles</h3>
+    <p style="color:var(--text-dim); line-height:1.75; margin-bottom:48px; font-size:16px;" data-en="The hardest constraint was budget: proving real growth on a total monthly spend of roughly 5,000 SAR meant no room for inefficient testing. Every persona, segmentation, and creative had to be deliberate from the start — which is why that work happened before any meaningful scaling of spend, not after." data-ar="كان أكبر التحديات هو الميزانية: إثبات نمو فعلي بميزانية شهرية إجمالية تقارب 5,000 ريال لم يترك مساحة للتجربة غير المدروسة. كل بيرسونا، تقسيم، ومحتوى إعلاني كان لا بد أن يكون مدروساً منذ البداية — لهذا تم هذا العمل قبل أي توسعة فعلية في الميزانية، لا بعدها.">The hardest constraint was budget: proving real growth on a total monthly spend of roughly 5,000 SAR meant no room for inefficient testing. Every persona, segmentation, and creative had to be deliberate from the start — which is why that work happened before any meaningful scaling of spend, not after.</p>
+
+    <h3 style="font-size:22px; font-weight:700; margin-bottom:20px;" data-en="Results" data-ar="النتائج">Results</h3>
+    <div class="work-grid" style="grid-template-columns:repeat(2,1fr); gap:16px; margin-bottom:48px;">
+      <div class="glass" style="padding:24px;">
+        <div class="stat-num" style="font-size:32px;">2,133</div>
+        <div class="stat-label" data-en="Total registered customers" data-ar="إجمالي العملاء المسجلين">Total registered customers</div>
+      </div>
+      <div class="glass" style="padding:24px;">
+        <div class="stat-num" style="font-size:32px;">97<span class="accent">%</span></div>
+        <div class="stat-label" data-en="Customer satisfaction rate" data-ar="نسبة رضا العملاء">Customer satisfaction rate</div>
+      </div>
+      <div class="glass" style="padding:24px;">
+        <div class="stat-num" style="font-size:32px;">744</div>
+        <div class="stat-label" data-en="Subscriptions in one year (peak: 121 in Oct)" data-ar="اشتراكات خلال سنة (أعلاها 121 في أكتوبر)">Subscriptions in one year (peak: 121 in Oct)</div>
+      </div>
+      <div class="glass" style="padding:24px;">
+        <div class="stat-num" style="font-size:32px;"><span class="accent">#1</span></div>
+        <div class="stat-label" data-en="Organic Google ranking, Jeddah &amp; Makkah" data-ar="ترتيب أول عضوياً على جوجل في جدة ومكة">Organic Google ranking, Jeddah &amp; Makkah</div>
+      </div>
+    </div>
+
+    <h3 style="font-size:22px; font-weight:700; margin-bottom:14px;" data-en="Reflection" data-ar="خلاصة">Reflection</h3>
+    <p style="color:var(--text-dim); line-height:1.75; margin-bottom:20px; font-size:16px;" data-en="This project taught me that infrastructure has to come before scale. Most brands want to scale ad spend before they can even measure what spend is doing — we did the opposite, and a ~5,000 SAR/month budget outperformed what far larger unstructured budgets typically achieve, because every riyal was traceable to a specific persona, package, and creative." data-ar="علّمني هذا المشروع أن البنية التحتية يجب أن تسبق التوسع. أغلب العلامات التجارية تريد توسعة الإنفاق الإعلاني قبل أن تستطيع حتى قياس تأثيره — نحن فعلنا العكس، وميزانية ~5,000 ريال شهرياً حققت نتائج تفوق ما تحققه ميزانيات أكبر بكثير وغير منظمة، لأن كل ريال كان قابلاً للتتبع لبيرسونا وباقة ومحتوى محدد.">This project taught me that infrastructure has to come before scale. Most brands want to scale ad spend before they can even measure what spend is doing — we did the opposite, and a ~5,000 SAR/month budget outperformed what far larger unstructured budgets typically achieve, because every riyal was traceable to a specific persona, package, and creative.</p>
+  </div>
+</section>
+<!-- ================= CASE STUDY: ASMARA ================= -->
+<section class="page-section case-study" id="case-asmara">
+  <div class="wrap section-pad" style="padding-top:160px; max-width:880px;">
+    <a href="#work" data-route="work" class="btn-secondary glass" style="margin-bottom:40px; display:inline-flex;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      <span data-en="All Work" data-ar="كل الأعمال">All Work</span>
+    </a>
+    <span class="work-tag" style="position:static; display:inline-block; margin-bottom:20px;" data-en="Operations · Creative Direction · HR Build-Out" data-ar="عمليات · إدارة إبداعية · بناء موارد بشرية">Operations · Creative Direction · HR Build-Out</span>
+    <h1 style="font-size:clamp(32px,4.5vw,52px); font-weight:800; letter-spacing:-0.02em; margin-bottom:20px; line-height:1.1;" data-en="Asmara Agency: From Business Development to De Facto GM" data-ar="وكالة أسمرة: من تطوير الأعمال إلى مدير عام بالفعل">Asmara Agency: From Business Development to De Facto GM</h1>
+
+    <div class="glass-strong" style="padding:32px; border-radius:var(--radius-lg); margin:32px 0 48px;">
+      <p style="font-size:18px; line-height:1.6; font-style:italic;" data-en="Joined as a business developer to bring in new projects. Left having rebuilt the agency's department structure, founded its design division as a primary revenue line, and been appointed informal administrative lead working directly alongside the CEO." data-ar="انضممت كمطور أعمال لاستقطاب مشاريع جديدة. وغادرت بعد إعادة هيكلة أقسام الوكالة، وتأسيس قسم التصميم كمصدر دخل أساسي، وتعييني كمسؤول إداري غير رسمي يعمل مباشرة مع الرئيس التنفيذي.">Joined as a business developer to bring in new projects. Left having rebuilt the agency's department structure, founded its design division as a primary revenue line, and been appointed informal administrative lead working directly alongside the CEO.</p>
+    </div>
+
+    <div class="work-visual glass" style="height:340px; border-radius:var(--radius-lg); margin-bottom:48px; background:linear-gradient(135deg,#241a0d,#0a0a0a);">
+      <span class="ph-label" data-en="[ Replace with Asmara project visuals ]" data-ar="[ استبدل بصور مشاريع أسمرة ]">[ Replace with Asmara project visuals ]</span>
+    </div>
+
+    <h3 style="font-size:22px; font-weight:700; margin-bottom:14px;" data-en="Context &amp; Problem" data-ar="السياق والمشكلة">Context &amp; Problem</h3>
+    <p style="color:var(--text-dim); line-height:1.75; margin-bottom:36px; font-size:16px;" data-en="Asmara was a Saudi creative agency specializing almost exclusively in motion graphics and animation. I joined to develop new business — but once inside, I identified a structural gap: no organized graphic design department, despite design being a far faster revenue cycle than the slow, resource-intensive animation work a young agency needed for steady cash flow. The wider organization also had no clear departmental structure." data-ar="كانت أسمرة وكالة إبداعية سعودية متخصصة بشكل أساسي في الموشن جرافيك والأنيميشن. انضممت لتطوير أعمال جديدة — لكن بعد الدخول، رصدت ثغرة هيكلية: لا يوجد قسم تصميم جرافيكي منظم، على الرغم من أن التصميم دورة دخل أسرع بكثير من الأنيميشن البطيء وكثيف الموارد الذي تحتاجه وكالة ناشئة للحفاظ على تدفق نقدي مستقر. كما لم يكن للمؤسسة الأوسع هيكل واضح للأقسام.">Asmara was a Saudi creative agency specializing almost exclusively in motion graphics and animation. I joined to develop new business — but once inside, I identified a structural gap: no organized graphic design department, despite design being a far faster revenue cycle than the slow, resource-intensive animation work a young agency needed for steady cash flow. The wider organization also had no clear departmental structure.</p>
+
+    <h3 style="font-size:22px; font-weight:700; margin-bottom:14px;" data-en="Strategy &amp; Execution" data-ar="الاستراتيجية والتنفيذ">Strategy &amp; Execution</h3>
+    <p style="color:var(--text-dim); line-height:1.75; margin-bottom:20px; font-size:16px;" data-en="I stepped away from my original business development mandate to art-direct the graphic design department until it ran independently — to the point that design revenue became a primary funding source covering the rest of the agency, including animation. I then took over leadership of the motion department too, maintaining quality control across both." data-ar="ابتعدت عن مهمتي الأساسية في تطوير الأعمال لأتولى الإدارة الفنية لقسم التصميم الجرافيكي حتى أصبح مستقلاً تماماً — إلى درجة أن دخل التصميم أصبح مصدر تمويل أساسي يغطي تكاليف باقي الوكالة، بما فيها الأنيميشن. ثم تولّيت قيادة قسم الموشن أيضاً، مع متابعة الجودة في كليهما.">I stepped away from my original business development mandate to art-direct the graphic design department until it ran independently — to the point that design revenue became a primary funding source covering the rest of the agency, including animation. I then took over leadership of the motion department too, maintaining quality control across both.</p>
+    <p style="color:var(--text-dim); line-height:1.75; margin-bottom:36px; font-size:16px;" data-en="As project volume grew without clear structure, I built a dedicated HR function from scratch — personally recruiting the HR hire, aligning them with company goals, and working individually with them to fix issues across every department, including project timeline planning, leave policy, and outdated employee contracts that protected neither side adequately." data-ar="ومع نمو حجم المشاريع دون وجود هيكل واضح، أسست قسم موارد بشرية من الصفر — استقطبت بنفسي الموظف المسؤول، وعملت معه بشكل فردي لحل مشكلات في جميع الأقسام، شملت تنظيم الجداول الزمنية للمشاريع، سياسات الإجازات، والعقود الوظيفية القديمة التي لم تكن تحمي أي من الطرفين بشكل كافٍ.">As project volume grew without clear structure, I built a dedicated HR function from scratch — personally recruiting the HR hire, aligning them with company goals, and working individually with them to fix issues across every department, including project timeline planning, leave policy, and outdated employee contracts that protected neither side adequately.</p>
+
+    <h3 style="font-size:22px; font-weight:700; margin-bottom:14px;" data-en="Results" data-ar="النتائج">Results</h3>
+    <ul style="color:var(--text-dim); line-height:1.9; margin-bottom:48px; font-size:16px; padding-left:20px;">
+      <li data-en="Founded and scaled a graphic design department that became a primary revenue source" data-ar="تأسيس وتوسيع قسم تصميم جرافيكي أصبح مصدر دخل أساسي">Founded and scaled a graphic design department that became a primary revenue source</li>
+      <li data-en="Took over and stabilized the motion/animation department" data-ar="تولي قيادة قسم الموشن والأنيميشن وتثبيت استقراره">Took over and stabilized the motion/animation department</li>
+      <li data-en="Built the agency's first HR function and resolved structural issues across every department" data-ar="بناء أول وظيفة موارد بشرية للوكالة وحل المشكلات الهيكلية في جميع الأقسام">Built the agency's first HR function and resolved structural issues across every department</li>
+      <li data-en="Rebuilt all employee contracts to protect both company and staff" data-ar="إعادة بناء جميع العقود الوظيفية لحماية الشركة والموظفين">Rebuilt all employee contracts to protect both company and staff</li>
+      <li data-en="Appointed de facto administrative co-lead by the CEO" data-ar="التعيين كمسؤول إداري مشارك بالفعل من قبل الرئيس التنفيذي">Appointed de facto administrative co-lead by the CEO</li>
+    </ul>
+
+    <h3 style="font-size:22px; font-weight:700; margin-bottom:14px;" data-en="Reflection" data-ar="خلاصة">Reflection</h3>
+    <p style="color:var(--text-dim); line-height:1.75; margin-bottom:20px; font-size:16px;" data-en="This was less a marketing project and more proof that I can see and fix organizational problems beyond my job title when the business needs it — and that creative leadership and operational leadership are not separate skill sets for me." data-ar="كان هذا أقل من مشروع تسويقي وأكثر دليلاً على أنني أستطيع رصد وحل مشكلات تنظيمية تتجاوز مسمى وظيفتي عندما تحتاج المؤسسة لذلك — وأن القيادة الإبداعية والقيادة التشغيلية ليستا مهارتين منفصلتين بالنسبة لي.">This was less a marketing project and more proof that I can see and fix organizational problems beyond my job title when the business needs it — and that creative leadership and operational leadership are not separate skill sets for me.</p>
+  </div>
+</section>
+<!-- ================= CASE STUDY: SHA'ER AL-RAYA ================= -->
+<section class="page-section case-study" id="case-shaer">
+  <div class="wrap section-pad" style="padding-top:160px; max-width:880px;">
+    <a href="#work" data-route="work" class="btn-secondary glass" style="margin-bottom:40px; display:inline-flex;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      <span data-en="All Work" data-ar="كل الأعمال">All Work</span>
+    </a>
+    <span class="work-tag" style="position:static; display:inline-block; margin-bottom:20px;" data-en="Creative Direction · AI-Assisted Production · National Media" data-ar="إدارة إبداعية · إنتاج بمساعدة الذكاء الاصطناعي · إعلام وطني">Creative Direction · AI-Assisted Production · National Media</span>
+    <h1 style="font-size:clamp(32px,4.5vw,52px); font-weight:800; letter-spacing:-0.02em; margin-bottom:20px; line-height:1.1;" data-en="Sha'er Al-Raya: Creative Direction Under National Visibility" data-ar="شاعر الراية: إدارة إبداعية تحت ظهور وطني واسع">Sha'er Al-Raya: Creative Direction Under National Visibility</h1>
+
+    <div class="glass-strong" style="padding:32px; border-radius:var(--radius-lg); margin:32px 0 48px;">
+      <p style="font-size:18px; line-height:1.6; font-style:italic;" data-en="Personally recruited and directed the visual production team for Season 4 of one of Saudi Arabia's largest cultural TV programs — with quality improvements specifically praised by the show's management." data-ar="استقطبت وأدرت بنفسي فريق الإنتاج البصري للموسم الرابع من أحد أكبر البرامج الثقافية التلفزيونية في السعودية — مع إشادة شخصية من إدارة البرنامج بالتطور في الجودة.">Personally recruited and directed the visual production team for Season 4 of one of Saudi Arabia's largest cultural TV programs — with quality improvements specifically praised by the show's management.</p>
+    </div>
+
+    <!-- Banner -->
+    <div style="border-radius:var(--radius-lg); overflow:hidden; margin-bottom:16px;">
+      <img src="assets/projects/shaer/shaer-banner.jpg" alt="Sha'er Al-Raya Banner" style="width:100%;display:block;">
+    </div>
+    <!-- Social posts grid -->
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-bottom:16px;">
+      <div style="border-radius:var(--radius-md); overflow:hidden;">
+        <img src="assets/projects/shaer/shaer-national-day.png" alt="National Day" style="width:100%;display:block;">
+      </div>
+      <div style="border-radius:var(--radius-md); overflow:hidden;">
+        <img src="assets/projects/shaer/shaer-dream.png" alt="Dream Post" style="width:100%;display:block;">
+      </div>
+      <div style="border-radius:var(--radius-md); overflow:hidden;">
+        <img src="assets/projects/shaer/shaer-knight.png" alt="Knight Post" style="width:100%;display:block;">
+      </div>
+      <div style="border-radius:var(--radius-md); overflow:hidden;">
+        <img src="assets/projects/shaer/shaer-past-future.png" alt="Past Future Post" style="width:100%;display:block;">
+      </div>
+    </div>
+    <!-- Video reel -->
+    <p style="color:var(--text-faint); font-size:13px; margin-bottom:12px;" data-en="Video content samples from the season:" data-ar="عينات من محتوى الفيديو للموسم:">عينات من محتوى الفيديو للموسم:</p>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:10px;">
+      <video autoplay muted loop playsinline style="width:100%;border-radius:var(--radius-sm);"><source src="assets/projects/shaer/shaer-video1.mp4" type="video/mp4"></video>
+      <video autoplay muted loop playsinline style="width:100%;border-radius:var(--radius-sm);"><source src="assets/projects/shaer/shaer-video2.mp4" type="video/mp4"></video>
+      <video autoplay muted loop playsinline style="width:100%;border-radius:var(--radius-sm);"><source src="assets/projects/shaer/shaer-video3.mp4" type="video/mp4"></video>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:48px;">
+      <video autoplay muted loop playsinline style="width:100%;border-radius:var(--radius-sm);"><source src="assets/projects/shaer/shaer-video4.mp4" type="video/mp4"></video>
+      <video autoplay muted loop playsinline style="width:100%;border-radius:var(--radius-sm);"><source src="assets/projects/shaer/shaer-video5.mp4" type="video/mp4"></video>
+      <video autoplay muted loop playsinline style="width:100%;border-radius:var(--radius-sm);"><source src="assets/projects/shaer/shaer-video6.mp4" type="video/mp4"></video>
+    </div>
+
+    <h3 style="font-size:22px; font-weight:700; margin-bottom:14px;" data-en="Context &amp; Problem" data-ar="السياق والمشكلة">Context &amp; Problem</h3>
+    <p style="color:var(--text-dim); line-height:1.75; margin-bottom:36px; font-size:16px;" data-en="Ahead of Season 4 of Sha'er Al-Raya, broadcast by the Saudi Broadcasting Authority (SBA), the founder of Creative 360 brought me in to assemble and direct a full production team — designers, motion artists, and video editors — for the show's social media visual identity. Previous seasons had specific, identifiable design weaknesses, especially around visual material availability under tight broadcast timelines." data-ar="قبل بداية الموسم الرابع من شاعر الراية، الذي تذيعه هيئة الإذاعة والتلفزيون السعودية، تواصل معي مؤسس كريتيف 360 لتجميع وإدارة فريق إنتاج كامل — مصممين، فنانين موشن، ومحررين فيديو — للهوية البصرية للبرنامج على السوشيال ميديا. كانت المواسم السابقة تعاني من نقاط ضعف تصميمية محددة، خصوصاً في توفر المواد البصرية تحت ضغط الجداول الزمنية للبث.">Ahead of Season 4 of Sha'er Al-Raya, broadcast by the Saudi Broadcasting Authority (SBA), the founder of Creative 360 brought me in to assemble and direct a full production team — designers, motion artists, and video editors — for the show's social media visual identity. Previous seasons had specific, identifiable design weaknesses, especially around visual material availability under tight broadcast timelines.</p>
+
+    <h3 style="font-size:22px; font-weight:700; margin-bottom:14px;" data-en="Strategy &amp; Execution" data-ar="الاستراتيجية والتنفيذ">Strategy &amp; Execution</h3>
+    <p style="color:var(--text-dim); line-height:1.75; margin-bottom:20px; font-size:16px;" data-en="I studied previous seasons in detail to identify exactly where designs fell short, then built a complete art direction framework and recruited talent specifically matched to executing that vision — while keeping tight control of the team budget to stretch it as far as possible." data-ar="درست المواسم السابقة بالتفصيل لتحديد بالضبط أين قصرت التصاميم، ثم بنيت إطاراً متكاملاً للتوجيه الفني واستقطبت كفاءات تتماشى بدقة مع تنفيذ هذه الرؤية — مع إدارة محكمة لميزانية الفريق لاستغلالها لأقصى حد ممكن.">I studied previous seasons in detail to identify exactly where designs fell short, then built a complete art direction framework and recruited talent specifically matched to executing that vision — while keeping tight control of the team budget to stretch it as far as possible.</p>
+    <p style="color:var(--text-dim); line-height:1.75; margin-bottom:36px; font-size:16px;" data-en="To solve the recurring gap in available visual material under broadcast deadlines, I made the strategic call to incorporate AI-assisted creative tools into the workflow — closing production gaps without sacrificing visual quality or consistency, even when source material was limited or last-minute." data-ar="ولحل الثغرة المتكررة في توفر المواد البصرية تحت ضغط مواعيد البث، اتخذت قراراً استراتيجياً بإدماج أدوات إبداعية مدعومة بالذكاء الاصطناعي في سير العمل — لإغلاق الفجوات الإنتاجية دون التضحية بالجودة البصرية أو الاتساق، حتى عند محدودية المواد المصدرية أو ضيق الوقت.">To solve the recurring gap in available visual material under broadcast deadlines, I made the strategic call to incorporate AI-assisted creative tools into the workflow — closing production gaps without sacrificing visual quality or consistency, even when source material was limited or last-minute.</p>
+
+    <h3 style="font-size:22px; font-weight:700; margin-bottom:14px;" data-en="Results" data-ar="النتائج">Results</h3>
+    <ul style="color:var(--text-dim); line-height:1.9; margin-bottom:48px; font-size:16px; padding-left:20px;">
+      <li data-en="Program management personally praised the visual quality improvement over previous seasons" data-ar="إشادة شخصية من إدارة البرنامج بالتطور في الجودة البصرية مقارنة بالمواسم السابقة">Program management personally praised the visual quality improvement over previous seasons</li>
+      <li data-en="Successfully delivered the full pre-broadcast visual identity and content system for the season" data-ar="تسليم كامل للهوية البصرية ونظام المحتوى لما قبل البث للموسم">Successfully delivered the full pre-broadcast visual identity and content system for the season</li>
+    </ul>
+    <p style="color:var(--text-faint); font-size:14px; font-style:italic; margin-bottom:36px;" data-en="Note: direct responsibility covered the creative direction phase leading up to broadcast; ongoing in-season and post-broadcast content was managed by a different team after handover." data-ar="ملاحظة: مسؤوليتي المباشرة شملت مرحلة الإدارة الإبداعية قبل البث؛ تمت إدارة المحتوى خلال وبعد البث من فريق آخر بعد التسليم.">Note: direct responsibility covered the creative direction phase leading up to broadcast; ongoing in-season and post-broadcast content was managed by a different team after handover.</p>
+
+    <h3 style="font-size:22px; font-weight:700; margin-bottom:14px;" data-en="Reflection" data-ar="خلاصة">Reflection</h3>
+    <p style="color:var(--text-dim); line-height:1.75; margin-bottom:20px; font-size:16px;" data-en="This project is clear proof that I can lead creative direction at a national, brand-sensitive scale — recruiting the right team, managing budget discipline, and solving production constraints creatively rather than letting them lower the quality bar." data-ar="هذا المشروع دليل واضح على قدرتي على قيادة الإدارة الإبداعية على نطاق وطني حساس للعلامة التجارية — استقطاب الفريق المناسب، الانضباط في إدارة الميزانية، وحل قيود الإنتاج بإبداع دون السماح لها بخفض مستوى الجودة.">This project is clear proof that I can lead creative direction at a national, brand-sensitive scale — recruiting the right team, managing budget discipline, and solving production constraints creatively rather than letting them lower the quality bar.</p>
+  </div>
+</section>
+<!-- ================= CASE STUDY: ACWAPOWER ================= -->
+<section class="page-section case-study" id="case-acwapower">
+  <div class="wrap section-pad" style="padding-top:160px; max-width:880px;">
+    <a href="#work" data-route="work" class="btn-secondary glass" style="margin-bottom:40px; display:inline-flex;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      <span data-en="All Work" data-ar="كل الأعمال">All Work</span>
+    </a>
+    <span class="work-tag" style="position:static; display:inline-block; margin-bottom:20px;" data-en="Design &amp; Motion · Illustration · Storyboarding" data-ar="تصميم وموشن · رسم · ستوري بورد">Design &amp; Motion · Illustration · Storyboarding</span>
+    <h1 style="font-size:clamp(32px,4.5vw,52px); font-weight:800; letter-spacing:-0.02em; margin-bottom:20px; line-height:1.1;" data-en="AcwaPower: Illustration-to-Animation Pipeline" data-ar="أكوا باور: من الرسم إلى خط إنتاج التحريك">AcwaPower: Illustration-to-Animation Pipeline</h1>
+    <p style="color:var(--text-dim); line-height:1.75; margin-bottom:40px; font-size:16px;" data-en="As a freelance illustrator for Zaini Studios, I created a full set of storyboard frames and finished illustrations for AcwaPower's corporate motion graphics video — building a cohesive visual style from scratch and collaborating closely with the animation director to ensure every scene transitioned smoothly into the animation phase." data-ar="كمصمم رسوم مستقل لدى Zaini Studios، أنشأت مجموعة كاملة من فريمات الستوري بورد والرسومات النهائية لفيديو الموشن جرافيك الخاص بأكوا باور — ببناء أسلوب بصري متكامل من الصفر والتعاون الوثيق مع مخرج التحريك لضمان انتقال كل مشهد بسلاسة لمرحلة التحريك.">As a freelance illustrator for Zaini Studios, I created a full set of storyboard frames and finished illustrations for AcwaPower's corporate motion graphics video — building a cohesive visual style from scratch and collaborating closely with the animation director to ensure every scene transitioned smoothly into the animation phase.</p>
+
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:6px; text-align:center;">
+      <p style="color:var(--accent); font-size:12px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase;" data-en="Storyboard" data-ar="ستوري بورد">ستوري بورد</p>
+      <p style="color:var(--accent); font-size:12px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase;" data-en="Designed Frame" data-ar="فريم مصمم">فريم مصمم</p>
+      <p style="color:var(--accent); font-size:12px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase;" data-en="Final Snapshot" data-ar="الفريم النهائي">الفريم النهائي</p>
+    </div>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:10px; align-items:start;">
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/storyboard/1.png" alt="Storyboard 1" style="width:100%;display:block;"></div>
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/designed/1.png" alt="Designed Frame 1" style="width:100%;display:block;"></div>
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/final/1.png" alt="Final Frame 1" style="width:100%;display:block;"></div>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:10px; align-items:start;">
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/storyboard/2.png" alt="Storyboard 2" style="width:100%;display:block;"></div>
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/designed/2.png" alt="Designed Frame 2" style="width:100%;display:block;"></div>
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/final/2.png" alt="Final Frame 2" style="width:100%;display:block;"></div>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:10px; align-items:start;">
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/storyboard/3.png" alt="Storyboard 3" style="width:100%;display:block;"></div>
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/designed/3.png" alt="Designed Frame 3" style="width:100%;display:block;"></div>
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/final/3.png" alt="Final Frame 3" style="width:100%;display:block;"></div>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:10px; align-items:start;">
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/storyboard/4.png" alt="Storyboard 4" style="width:100%;display:block;"></div>
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/designed/4.png" alt="Designed Frame 4" style="width:100%;display:block;"></div>
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/final/4.png" alt="Final Frame 4" style="width:100%;display:block;"></div>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:10px; align-items:start;">
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/storyboard/5.png" alt="Storyboard 5" style="width:100%;display:block;"></div>
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/designed/5.png" alt="Designed Frame 5" style="width:100%;display:block;"></div>
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/final/5.png" alt="Final Frame 5" style="width:100%;display:block;"></div>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:10px; align-items:start;">
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/storyboard/6.png" alt="Storyboard 6" style="width:100%;display:block;"></div>
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/designed/6.png" alt="Designed Frame 6" style="width:100%;display:block;"></div>
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/final/6.png" alt="Final Frame 6" style="width:100%;display:block;"></div>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:10px; align-items:start;">
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/storyboard/7.png" alt="Storyboard 7" style="width:100%;display:block;"></div>
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/designed/7.png" alt="Designed Frame 7" style="width:100%;display:block;"></div>
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/final/7.png" alt="Final Frame 7" style="width:100%;display:block;"></div>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:10px; align-items:start;">
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/storyboard/8.png" alt="Storyboard 8" style="width:100%;display:block;"></div>
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/designed/8.png" alt="Designed Frame 8" style="width:100%;display:block;"></div>
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/final/8.png" alt="Final Frame 8" style="width:100%;display:block;"></div>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:10px; align-items:start;">
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/storyboard/9.png" alt="Storyboard 9" style="width:100%;display:block;"></div>
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/designed/9.png" alt="Designed Frame 9" style="width:100%;display:block;"></div>
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/final/9.png" alt="Final Frame 9" style="width:100%;display:block;"></div>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:10px; align-items:start;">
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/storyboard/10.png" alt="Storyboard 10" style="width:100%;display:block;"></div>
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/designed/10.png" alt="Designed Frame 10" style="width:100%;display:block;"></div>
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/final/10.png" alt="Final Frame 10" style="width:100%;display:block;"></div>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:10px; align-items:start;">
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/storyboard/11.png" alt="Storyboard 11" style="width:100%;display:block;"></div>
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/designed/11.png" alt="Designed Frame 11" style="width:100%;display:block;"></div>
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/final/11.png" alt="Final Frame 11" style="width:100%;display:block;"></div>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:10px; align-items:start;">
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/storyboard/12.png" alt="Storyboard 12" style="width:100%;display:block;"></div>
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/designed/12.png" alt="Designed Frame 12" style="width:100%;display:block;"></div>
+        <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/acwapower/final/12.png" alt="Final Frame 12" style="width:100%;display:block;"></div>
+      </div>
+
+  </div>
+</section>
+
+<!-- ================= CASE STUDY: EWAX ================= -->
+<section class="page-section case-study" id="case-ewax">
+  <div class="wrap section-pad" style="padding-top:160px; max-width:880px;">
+    <a href="#work" data-route="work" class="btn-secondary glass" style="margin-bottom:40px; display:inline-flex;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      <span data-en="All Work" data-ar="كل الأعمال">All Work</span>
+    </a>
+    <span class="work-tag" style="position:static; display:inline-block; margin-bottom:20px;" data-en="Creative Direction · Government · Visual Identity" data-ar="إدارة إبداعية · حكومي · هوية بصرية">Creative Direction · Government · Visual Identity</span>
+    <h1 style="font-size:clamp(32px,4.5vw,52px); font-weight:800; letter-spacing:-0.02em; margin-bottom:20px; line-height:1.1;" data-en="EWAx Forum: Government Visual Identity at Scale" data-ar="ملتقى إيواكس: هوية بصرية حكومية على نطاق وطني">EWAx Forum: Government Visual Identity at Scale</h1>
+    <p style="color:var(--text-dim); line-height:1.75; margin-bottom:40px; font-size:16px;" data-en="For the Ministry of Environment, Water, and Agriculture's EWAx investment forum, I designed the visual identity and managed creative production for the entire event — including promotional and introductory materials, social account identity, and motion graphics video content, while directing the production team's creative output." data-ar="لملتقى إيواكس الاستثماري التابع لوزارة البيئة والمياه والزراعة، صممت الهوية البصرية وأدرت الإنتاج الإبداعي للملتقى بالكامل — شمل ذلك المواد الترويجية والتعريفية، هوية الحسابات على السوشيال ميديا، ومحتوى فيديوهات الموشن جرافيك، مع إدارة المخرج الإبداعي لفريق الإنتاج.">For the Ministry of Environment, Water, and Agriculture's EWAx investment forum, I designed the visual identity and managed creative production for the entire event — including promotional and introductory materials, social account identity, and motion graphics video content, while directing the production team's creative output.</p>
+        <!-- EWAx banner full width -->
+    <div style="border-radius:var(--radius-lg); overflow:hidden; margin-bottom:12px;">
+      <img src="assets/projects/ewax/ewax-header.png" alt="EWAx Header" style="width:100%;display:block;">
+    </div>
+    <!-- EWAx posts grid -->
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:20px;">
+      <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/ewax/ewax-founding-day.png" alt="EWAx" style="width:100%;display:block;"></div>
+      <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/ewax/ewax-auction.png" alt="EWAx" style="width:100%;display:block;"></div>
+      <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/ewax/ewax-specialized.png" alt="EWAx" style="width:100%;display:block;"></div>
+      <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/ewax/ewax-jobs.png" alt="EWAx" style="width:100%;display:block;"></div>
+      <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/ewax/ewax-speaker-sonia.png" alt="EWAx" style="width:100%;display:block;"></div>
+      <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/ewax/ewax-infographic1.png" alt="EWAx" style="width:100%;display:block;"></div>
+      <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/ewax/ewax-infographic2.png" alt="EWAx" style="width:100%;display:block;"></div>
+      <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/ewax/ewax-websummit.png" alt="EWAx" style="width:100%;display:block;"></div>
+      <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/ewax/ewax-ecosystem.png" alt="EWAx" style="width:100%;display:block;"></div>
+	  <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/ewax/ewax-future-sector.png" alt="EWAx" style="width:100%;display:block;"></div>
+      <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/ewax/ewax-clear-env.png" alt="EWAx" style="width:100%;display:block;"></div>
+      <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/ewax/ewax-monday-dec.png" alt="EWAx" style="width:100%;display:block;"></div>
+      <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/ewax/ewax-saturday-nov-04.png" alt="EWAx" style="width:100%;display:block;"></div>
+      <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/ewax/ewax-saturday-nov-02.png" alt="EWAx" style="width:100%;display:block;"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CASE STUDY: KIDANA ================= -->
+<section class="page-section case-study" id="case-kidana">
+  <div class="wrap section-pad" style="padding-top:160px; max-width:880px;">
+    <a href="#work" data-route="work" class="btn-secondary glass" style="margin-bottom:40px; display:inline-flex;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      <span data-en="All Work" data-ar="كل الأعمال">All Work</span>
+    </a>
+    <span class="work-tag" style="position:static; display:inline-block; margin-bottom:20px;" data-en="Social Media · Civic Infrastructure" data-ar="سوشيال ميديا · بنية تحتية وطنية">Social Media · Civic Infrastructure</span>
+    <h1 style="font-size:clamp(32px,4.5vw,52px); font-weight:800; letter-spacing:-0.02em; margin-bottom:20px; line-height:1.1;" data-en="Kidana: Holy Sites Social Content Direction" data-ar="كدانة: إدارة محتوى لتطوير المشاعر المقدسة">Kidana: Holy Sites Social Content Direction</h1>
+    <p style="color:var(--text-dim); line-height:1.75; margin-bottom:40px; font-size:16px;" data-en="I managed social media content production for Kidana, the company responsible for developing Saudi Arabia's Holy Sites — covering quality review, creative direction, and production team management for content that carries significant civic and cultural weight." data-ar="أدرت إنتاج محتوى التواصل الاجتماعي لكدانة، الشركة المسؤولة عن تطوير المشاعر المقدسة في السعودية — شمل ذلك مراجعة الجودة، الإدارة الإبداعية، وإدارة فريق الإنتاج لمحتوى يحمل ثقلاً وطنياً وثقافياً كبيراً.">I managed social media content production for Kidana, the company responsible for developing Saudi Arabia's Holy Sites — covering quality review, creative direction, and production team management for content that carries significant civic and cultural weight.</p>
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-bottom:20px;">
+      <div style="border-radius:var(--radius-md); overflow:hidden;"><img src="assets/projects/kidana/kidana-friday.png" alt="Kidana Friday" style="width:100%;display:block;"></div>
+      <div style="border-radius:var(--radius-md); overflow:hidden;"><img src="assets/projects/kidana/kidana-wadi.png" alt="Kidana Wadi" style="width:100%;display:block;"></div>
+      <div style="border-radius:var(--radius-md); overflow:hidden;"><img src="assets/projects/kidana/kidana-green-saudi.png" alt="Kidana Green Saudi" style="width:100%;display:block;"></div>
+      <div style="border-radius:var(--radius-md); overflow:hidden;"><img src="assets/projects/kidana/kidana-youth-day.png" alt="Kidana Youth Day" style="width:100%;display:block;"></div>
+    </div>
+  </div>
+</section>
+<!-- ================= ABOUT ================= -->
+<section class="page-section" id="about">
+  <div class="wrap section-pad" style="padding-top:160px; max-width:880px;">
+    <div class="section-head reveal">
+      <span class="section-eyebrow" data-en="About" data-ar="نبذة عني">About</span>
+      <h2 data-en="Design and business were never two different worlds." data-ar="التصاميم وتطوير الأعمال لم يكونا قط عالمين مختلفين.">Design and business were never two different worlds.</h2>
+    </div>
+
+    <p style="font-size:19px; line-height:1.75; color:var(--text); margin-bottom:28px;" data-en="I started in design — out of a genuine passion for art and creativity. But I studied Management Information Systems, which gave me a parallel education in business logic, systems thinking, and strategy. Most people see design and business as two different worlds. I never did." data-ar="بدأت طريقي المهني بالتصميم والمونتاج من شغف حقيقي بالفن والإبداع. ولكن مع دراستي لنظم المعلومات الإدارية، خطوت في طريق موازي في منطق الأعمال، التفكير المنظومي، والاستراتيجية. أغلب الناس يرون التصميم وتطوير الأعمال عالمين مختلفين. ولكن لم أرهما كذلك أبداً.">I started in design — out of a genuine passion for art and creativity. But I studied Management Information Systems, which gave me a parallel education in business logic, systems thinking, and strategy. Most people see design and business as two different worlds. I never did.</p>
+
+    <p style="font-size:16.5px; line-height:1.75; color:var(--text-dim); margin-bottom:48px;" data-en="Every brand problem I've solved since — whether it was rebuilding a struggling F&amp;B brand's entire growth engine, restructuring a creative agency's internal operations, or directing the visual identity for a national cultural program — has come from refusing to separate the two. Good marketing is a creative problem. Good design is a business decision." data-ar="كل مشكلة علامة تجارية حللتها منذ ذلك الحين — سواء كانت إعادة بناء محرك نمو كامل لعلامة وجبات متعثرة، إعادة هيكلة العمليات الداخلية لوكالة إبداعية، أو إدارة الهوية البصرية لبرنامج ثقافي وطني — جاءت من رفضي الفصل بين الاثنين. التسويق الجيد مشكلة إبداعية. التصميم الجيد قرار تجاري.">Every brand problem I've solved since — whether it was rebuilding a struggling F&amp;B brand's entire growth engine, restructuring a creative agency's internal operations, or directing the visual identity for a national cultural program — has come from refusing to separate the two. Good marketing is a creative problem. Good design is a business decision.</p>
+
+    <div class="glass" style="padding:36px; margin-bottom:48px;">
+      <p style="font-size:16px; line-height:1.75; color:var(--text-dim);" data-en="Over the past five years I've worked across Saudi Arabia's creative and business landscape — from leading creative production for government cultural programs at Creative 360, to restructuring a struggling design agency into a profitable, well-run operation at Asmara, to rebuilding a healthcare-adjacent F&amp;B brand's entire digital growth engine at Santorio. I've worked client-side, agency-side, and freelance — which means I understand a project from every angle in the room." data-ar="خلال السنوات الخمس الماضية عملت عبر المشهد الإبداعي والتجاري في السعودية — من قيادة الإنتاج الإبداعي لبرامج ثقافية حكومية في كريتيف 360، إلى إعادة هيكلة وكالة تصميم متعثرة لتصبح مؤسسة مربحة ومنظمة في أسمرة، إلى إعادة بناء محرك النمو الرقمي الكامل لعلامة وجبات صحية في سانتوريو. عملت من جهة العميل، من جهة الوكالة، وكعمل حر — وهذا يعني أنني أفهم المشروع من كل زاوية في الغرفة.">Over the past five years I've worked across Saudi Arabia's creative and business landscape — from leading creative production for government cultural programs at Creative 360, to restructuring a struggling design agency into a profitable, well-run operation at Asmara, to rebuilding a healthcare-adjacent F&amp;B brand's entire digital growth engine at Santorio. I've worked client-side, agency-side, and freelance — which means I understand a project from every angle in the room.</p>
+    </div>
+
+    <h3 style="font-size:22px; font-weight:700; margin-bottom:22px;" data-en="What I Bring" data-ar="ما أقدمه">What I Bring</h3>
+    <div class="work-grid" style="grid-template-columns:repeat(2,1fr); gap:16px; margin-bottom:56px;">
+      <div class="glass" style="padding:24px;">
+        <p style="color:var(--text); font-size:15px; line-height:1.6;" data-en="I execute the creative myself — I am not just briefing designers, I am one" data-ar="أنفذ المحتوى الإبداعي بنفسي — لست فقط من يوجّه المصممين، بل أنا أحدهم">I execute the creative myself — I am not just briefing designers, I am one</p>
+      </div>
+      <div class="glass" style="padding:24px;">
+        <p style="color:var(--text); font-size:15px; line-height:1.6;" data-en="I build the measurement infrastructure before I scale ad spend" data-ar="أبني البنية التحتية للقياس قبل توسعة الإنفاق الإعلاني">I build the measurement infrastructure before I scale ad spend</p>
+      </div>
+      <div class="glass" style="padding:24px;">
+        <p style="color:var(--text); font-size:15px; line-height:1.6;" data-en="I've restructured entire departments and built HR functions — not just run campaigns" data-ar="أعدت هيكلة أقسام كاملة وبنيت وظائف موارد بشرية — لا أدير حملات فقط">I've restructured entire departments and built HR functions — not just run campaigns</p>
+      </div>
+      <div class="glass" style="padding:24px;">
+        <p style="color:var(--text); font-size:15px; line-height:1.6;" data-en="I've worked at government, enterprise, and small-business scale — and know how each one operates" data-ar="عملت على مستوى حكومي، مؤسسي، وأعمال صغيرة — وأعرف كيف يعمل كل منها">I've worked at government, enterprise, and small-business scale — and know how each one operates</p>
+      </div>
+    </div>
+
+    <div class="glass-strong" style="padding:32px; text-align:center;">
+      <p style="font-size:17px; color:var(--text); margin-bottom:24px;" data-en="I'm looking for my next challenge — ideally a role or partnership where strategy and creative execution are expected to live in the same person." data-ar="أبحث عن تحديي القادم — وبالأخص دور أو شراكة تتوقع أن تجتمع الاستراتيجية والتنفيذ الإبداعي في شخص واحد.">I'm looking for my next challenge — ideally a role or partnership where strategy and creative execution are expected to live in the same person.</p>
+      <a href="#contact" data-route="contact" class="btn-primary"><span data-en="Get in Touch" data-ar="تواصل معي">Get in Touch</span></a>
+    </div>
+  </div>
+</section>
+<!-- ================= SKILLS ================= -->
+<section class="page-section" id="skills">
+  <div class="wrap section-pad" style="padding-top:160px;">
+    <div class="section-head reveal">
+      <span class="section-eyebrow" data-en="Skills &amp; Expertise" data-ar="المهارات والخبرات">Skills &amp; Expertise</span>
+      <h2 data-en="Four disciplines, one person." data-ar="أربعة تخصصات، شخص واحد.">Four disciplines, one person.</h2>
+      <p data-en="Organized by cluster so you can quickly find what matters for your role." data-ar="منظمة حسب التخصص لتجد بسرعة ما يهمك حسب الدور المطلوب.">Organized by cluster so you can quickly find what matters for your role.</p>
+    </div>
+
+    <div class="work-grid" style="grid-template-columns:repeat(2,1fr); gap:20px; margin-bottom:60px;">
+      <div class="glass" style="padding:32px;">
+        <h3 style="font-size:18px; font-weight:700; margin-bottom:18px; color:var(--accent);" data-en="Marketing &amp; Growth" data-ar="التسويق والنمو">Marketing &amp; Growth</h3>
+        <ul style="color:var(--text-dim); line-height:2; font-size:15px; padding-left:18px;">
+          <li data-en="Digital Marketing Strategy &amp; Campaign Planning" data-ar="استراتيجية التسويق الرقمي وتخطيط الحملات">Digital Marketing Strategy &amp; Campaign Planning</li>
+          <li data-en="Media Buying (Google Ads, Meta, Snapchat)" data-ar="شراء إعلامي (جوجل، ميتا، سناب شات)">Media Buying (Google Ads, Meta, Snapchat)</li>
+          <li data-en="Conversion Tracking &amp; Analytics (GTM, GA4, Clarity)" data-ar="تتبع التحويلات والتحليلات (GTM, GA4, Clarity)">Conversion Tracking &amp; Analytics (GTM, GA4, Clarity)</li>
+          <li data-en="SEO (organic #1 ranking, case-proven)" data-ar="تحسين محركات البحث (تصدّر عضوي مُثبت)">SEO (organic #1 ranking, case-proven)</li>
+          <li data-en="E-commerce Funnel Build (Salla)" data-ar="بناء قمع تجارة إلكترونية (سلة)">E-commerce Funnel Build (Salla)</li>
+          <li data-en="Persona Development &amp; Audience Segmentation" data-ar="تطوير البيرسونا وتقسيم الجمهور">Persona Development &amp; Audience Segmentation</li>
+        </ul>
+      </div>
+      <div class="glass" style="padding:32px;">
+        <h3 style="font-size:18px; font-weight:700; margin-bottom:18px; color:var(--accent);" data-en="Creative Direction &amp; Leadership" data-ar="الإدارة الإبداعية والقيادة">Creative Direction &amp; Leadership</h3>
+        <ul style="color:var(--text-dim); line-height:2; font-size:15px; padding-left:18px;">
+          <li data-en="Creative Project Management &amp; Team Leadership" data-ar="إدارة المشاريع الإبداعية وقيادة الفرق">Creative Project Management &amp; Team Leadership</li>
+          <li data-en="Recruitment, Evaluation &amp; Onboarding of Talent" data-ar="استقطاب وتقييم وتأهيل المواهب">Recruitment, Evaluation &amp; Onboarding of Talent</li>
+          <li data-en="Client Briefing &amp; Stakeholder Communication" data-ar="التواصل مع العملاء وأصحاب المصلحة">Client Briefing &amp; Stakeholder Communication</li>
+          <li data-en="Brand Identity &amp; Visual System Development" data-ar="تطوير الهوية البصرية والنظام البصري">Brand Identity &amp; Visual System Development</li>
+          <li data-en="Production Workflow &amp; Budget Management" data-ar="إدارة سير الإنتاج والميزانية">Production Workflow &amp; Budget Management</li>
+        </ul>
+      </div>
+      <div class="glass" style="padding:32px;">
+        <h3 style="font-size:18px; font-weight:700; margin-bottom:18px; color:var(--accent);" data-en="Design &amp; Production" data-ar="التصميم والإنتاج">Design &amp; Production</h3>
+        <ul style="color:var(--text-dim); line-height:2; font-size:15px; padding-left:18px;">
+          <li data-en="Graphic Design &amp; Brand Identity" data-ar="تصميم جرافيك وهوية بصرية">Graphic Design &amp; Brand Identity</li>
+          <li data-en="Illustration &amp; Storyboarding" data-ar="رسم وستوري بورد">Illustration &amp; Storyboarding</li>
+          <li data-en="Motion Graphics &amp; Video Editing" data-ar="موشن جرافيك ومونتاج فيديو">Motion Graphics &amp; Video Editing</li>
+          <li data-en="UI/UX (App &amp; Web Interface Design)" data-ar="تصميم واجهات المستخدم">UI/UX (App &amp; Web Interface Design)</li>
+          <li data-en="AI-Assisted Creative Production" data-ar="إنتاج إبداعي بمساعدة الذكاء الاصطناعي">AI-Assisted Creative Production</li>
+        </ul>
+      </div>
+      <div class="glass" style="padding:32px;">
+        <h3 style="font-size:18px; font-weight:700; margin-bottom:18px; color:var(--accent);" data-en="Operations &amp; Business" data-ar="العمليات والأعمال">Operations &amp; Business</h3>
+        <ul style="color:var(--text-dim); line-height:2; font-size:15px; padding-left:18px;">
+          <li data-en="Business Development &amp; Proposal Writing" data-ar="تطوير الأعمال وكتابة المقترحات">Business Development &amp; Proposal Writing</li>
+          <li data-en="Organizational Restructuring &amp; HR Build-Out" data-ar="إعادة الهيكلة التنظيمية وبناء الموارد البشرية">Organizational Restructuring &amp; HR Build-Out</li>
+          <li data-en="Strategic Planning &amp; Market Positioning" data-ar="التخطيط الاستراتيجي والتموضع السوقي">Strategic Planning &amp; Market Positioning</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="font-size:22px; font-weight:700; margin-bottom:24px;" data-en="Tools &amp; Software" data-ar="البرامج والأدوات">Tools &amp; Software</h3>
+    <div class="trust-logos" style="justify-content:flex-start;">
+      <span class="trust-pill glass">Adobe Photoshop</span>
+      <span class="trust-pill glass">Adobe Illustrator</span>
+      <span class="trust-pill glass">After Effects</span>
+      <span class="trust-pill glass">Premiere Pro</span>
+      <span class="trust-pill glass">Figma</span>
+      <span class="trust-pill glass">Higgsfield</span>
+      <span class="trust-pill glass">Google Ads</span>
+      <span class="trust-pill glass">Google Tag Manager</span>
+      <span class="trust-pill glass">GA4</span>
+      <span class="trust-pill glass">Microsoft Clarity</span>
+      <span class="trust-pill glass">Meta Ads</span>
+      <span class="trust-pill glass">Snapchat Ads</span>
+      <span class="trust-pill glass">Salla</span>
+    </div>
+  </div>
+</section>
+<!-- ================= EXPERIENCE ================= -->
+<section class="page-section" id="experience">
+  <div class="wrap section-pad" style="padding-top:160px; max-width:880px;">
+    <div class="section-head reveal">
+      <span class="section-eyebrow" data-en="Experience" data-ar="الخبرات">Experience</span>
+      <h2 data-en="Five years, four very different rooms." data-ar="خمس سنوات، أربع غرف مختلفة تماماً.">Five years, four very different rooms.</h2>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:0;">
+      <div class="glass" style="padding:32px; margin-bottom:20px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+          <h3 style="font-size:19px; font-weight:700;" data-en="Creative Director &amp; Head of Production" data-ar="مدير إبداعي ومدير قسم الإنتاج">Creative Director &amp; Head of Production</h3>
+          <span style="color:var(--accent); font-size:13.5px; font-weight:600;">Jun 2025 – Apr 2026</span>
+        </div>
+        <p style="color:var(--text-dim); font-size:14.5px; margin-bottom:16px;">Creative 360 — Saudi Arabia</p>
+        <ul style="color:var(--text-dim); line-height:1.9; font-size:15px; padding-left:18px;">
+          <li data-en="Led end-to-end creative production across government and enterprise projects, including the Ministry of Environment, Water &amp; Agriculture and SBA" data-ar="إدارة الإنتاج الإبداعي الشامل لمشاريع حكومية ومؤسسية، شملت وزارة البيئة والمياه والزراعة وهيئة الإذاعة والتلفزيون">Led end-to-end creative production across government and enterprise projects, including the Ministry of Environment, Water &amp; Agriculture and SBA</li>
+          <li data-en="Recruited, evaluated, and scaled multidisciplinary creative teams" data-ar="استقطاب وتقييم وتوسيع فرق إبداعية متعددة التخصصات">Recruited, evaluated, and scaled multidisciplinary creative teams</li>
+          <li data-en="Directed stakeholder communication and delivery across high-visibility national projects" data-ar="إدارة التواصل مع أصحاب المصلحة والتسليم لمشاريع وطنية عالية الظهور">Directed stakeholder communication and delivery across high-visibility national projects</li>
+        </ul>
+      </div>
+
+      <div class="glass" style="padding:32px; margin-bottom:20px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+          <h3 style="font-size:19px; font-weight:700;" data-en="Business Consultant &amp; Marketing Strategist" data-ar="مستشار أعمال وتسويق">Business Consultant &amp; Marketing Strategist</h3>
+          <span style="color:var(--accent); font-size:13.5px; font-weight:600;">Sep 2024 – Mar 2025</span>
+        </div>
+        <p style="color:var(--text-dim); font-size:14.5px; margin-bottom:16px;">Asmara Agency / Irteqaa — Saudi Arabia</p>
+        <ul style="color:var(--text-dim); line-height:1.9; font-size:15px; padding-left:18px;">
+          <li data-en="Managed marketing and branding projects with a focus on the healthcare sector" data-ar="إدارة مشاريع تسويق وهوية بصرية بتركيز على القطاع الطبي">Managed marketing and branding projects with a focus on the healthcare sector</li>
+          <li data-en="Developed growth proposals and strategies for new business opportunities" data-ar="تطوير مقترحات نمو واستراتيجيات لفرص أعمال جديدة">Developed growth proposals and strategies for new business opportunities</li>
+          <li data-en="Evaluated internal operations and restructured teams to improve efficiency" data-ar="تقييم العمليات الداخلية وإعادة هيكلة الفرق لتحسين الكفاءة">Evaluated internal operations and restructured teams to improve efficiency</li>
+        </ul>
+      </div>
+
+      <div class="glass" style="padding:32px; margin-bottom:20px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+          <h3 style="font-size:19px; font-weight:700;" data-en="Art Director &amp; Project Manager" data-ar="مدير فني ومدير مشاريع">Art Director &amp; Project Manager</h3>
+          <span style="color:var(--accent); font-size:13.5px; font-weight:600;">Dec 2023 – Sep 2024</span>
+        </div>
+        <p style="color:var(--text-dim); font-size:14.5px; margin-bottom:16px;">Asmara Agency — Saudi Arabia</p>
+        <ul style="color:var(--text-dim); line-height:1.9; font-size:15px; padding-left:18px;">
+          <li data-en="Founded and scaled the agency's graphic design department into a primary revenue line" data-ar="تأسيس وتوسيع قسم التصميم الجرافيكي ليصبح مصدر دخل أساسي">Founded and scaled the agency's graphic design department into a primary revenue line</li>
+          <li data-en="Took over leadership of the motion graphics department" data-ar="تولي قيادة قسم الموشن جرافيك">Took over leadership of the motion graphics department</li>
+          <li data-en="Built the agency's first HR function and rebuilt employee contracts company-wide" data-ar="بناء أول وظيفة موارد بشرية للوكالة وإعادة بناء العقود الوظيفية على مستوى الشركة">Built the agency's first HR function and rebuilt employee contracts company-wide</li>
+          <li data-en="Appointed informal administrative co-lead, working directly with the CEO" data-ar="التعيين كمسؤول إداري مشارك غير رسمي، بالعمل المباشر مع الرئيس التنفيذي">Appointed informal administrative co-lead, working directly with the CEO</li>
+        </ul>
+      </div>
+
+      <div class="glass" style="padding:32px; margin-bottom:20px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+          <h3 style="font-size:19px; font-weight:700;" data-en="Marketing Specialist &amp; Brand Growth Consultant" data-ar="أخصائي تسويق ومستشار نمو العلامة التجارية">Marketing Specialist &amp; Brand Growth Consultant</h3>
+          <span style="color:var(--accent); font-size:13.5px; font-weight:600;">Sep 2021 – Mar 2024</span>
+        </div>
+        <p style="color:var(--text-dim); font-size:14.5px; margin-bottom:16px;">Santorio Saudia — Saudi Arabia</p>
+        <ul style="color:var(--text-dim); line-height:1.9; font-size:15px; padding-left:18px;">
+          <li data-en="Built a full e-commerce subscription funnel from zero, integrated with GTM, GA4, and Clarity" data-ar="بناء قمع اشتراكات تجارة إلكترونية كامل من الصفر، مدمج مع GTM وGA4 وClarity">Built a full e-commerce subscription funnel from zero, integrated with GTM, GA4, and Clarity</li>
+          <li data-en="Drove 240%+ sales growth and 718,370 SAR in revenue on a ~5,000 SAR/month total budget" data-ar="تحقيق نمو 240%+ في المبيعات و718,370 ريال عوائد بميزانية إجمالية شهرية ~5,000 ريال">Drove 240%+ sales growth and 718,370 SAR in revenue on a ~5,000 SAR/month total budget</li>
+          <li data-en="Grew Instagram organically from under 1,000 to 6,000 followers in one year" data-ar="نمو عضوي لمتابعي انستجرام من أقل من 1,000 إلى 6,000 خلال سنة">Grew Instagram organically from under 1,000 to 6,000 followers in one year</li>
+          <li data-en="Achieved #1 organic Google search ranking in Jeddah and Makkah" data-ar="تحقيق المركز الأول عضوياً في نتائج بحث جوجل في جدة ومكة">Achieved #1 organic Google search ranking in Jeddah and Makkah</li>
+          <li data-en="Negotiated strategic partnerships, including Saudia's Mazaya program and the Yumealz app integration" data-ar="التفاوض على شراكات استراتيجية، شملت برنامج مزايا للخطوط السعودية وتكامل تطبيق Yumealz">Negotiated strategic partnerships, including Saudia's Mazaya program and the Yumealz app integration</li>
+        </ul>
+      </div>
+
+      <div class="glass" style="padding:32px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+          <h3 style="font-size:19px; font-weight:700;" data-en="Marketing Specialist &amp; Graphic Designer" data-ar="أخصائي تسويق ومصمم جرافيك">Marketing Specialist &amp; Graphic Designer</h3>
+          <span style="color:var(--accent); font-size:13.5px; font-weight:600;">Sep 2019 – Aug 2020</span>
+        </div>
+        <p style="color:var(--text-dim); font-size:14.5px; margin-bottom:16px;">G7 Software House — Saudi Arabia</p>
+        <ul style="color:var(--text-dim); line-height:1.9; font-size:15px; padding-left:18px;">
+          <li data-en="Contributed to ERP product marketing and positioning" data-ar="المساهمة في تسويق وتموضع منتج ERP">Contributed to ERP product marketing and positioning</li>
+          <li data-en="Collaborated with the development team on UI/UX improvements" data-ar="التعاون مع فريق التطوير لتحسينات واجهة وتجربة المستخدم">Collaborated with the development team on UI/UX improvements</li>
+          <li data-en="Designed digital content, motion graphics, and social media assets" data-ar="تصميم محتوى رقمي وموشن جرافيك ومخرجات سوشيال ميديا">Designed digital content, motion graphics, and social media assets</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="glass" style="padding:28px; margin-top:30px; text-align:center;">
+      <p style="color:var(--text-dim); font-size:15px;" data-en="Bachelor's Degree in Management Information Systems (MIS) — KMA, 2018–2022" data-ar="بكالوريوس نظم المعلومات الإدارية — كلية الملك خالد العسكرية، 2018–2022">Bachelor's Degree in Management Information Systems (MIS) — KMA, 2018–2022</p>
+    </div>
+  </div>
+</section>
+<!-- ================= CONTACT ================= -->
+<section class="page-section" id="contact">
+  <div class="wrap section-pad" style="padding-top:160px; max-width:680px;">
+    <div class="section-head reveal" style="text-align:center; margin:0 auto 48px; max-width:680px;">
+      <span class="section-eyebrow" data-en="Contact" data-ar="تواصل">Contact</span>
+      <h2 data-en="Let's build something." data-ar="لنبني شيئاً معاً.">Let's build something.</h2>
+      <p data-en="Open to full-time roles and select freelance partnerships across the Gulf." data-ar="متاح للوظائف بدوام كامل وشراكات عمل حر مختارة في دول الخليج.">Open to full-time roles and select freelance partnerships across the Gulf.</p>
+    </div>
+
+    <div class="glass-strong" style="padding:44px; text-align:center;">
+      <div style="display:flex; flex-direction:column; gap:18px; margin-bottom:32px;">
+        <a href="mailto:m.yasirdarwish@gmail.com" style="color:var(--text); text-decoration:none; font-size:18px; font-weight:600;">m.yasirdarwish@gmail.com</a>
+        <a href="tel:+201030600171" style="color:var(--text-dim); text-decoration:none; font-size:16px;">+20 10 30 600 171</a>
+      </div>
+      <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+        <a href="mailto:m.yasirdarwish@gmail.com" class="btn-primary"><span data-en="Send an Email" data-ar="إرسال بريد إلكتروني">Send an Email</span></a>
+        <a href="https://linkedin.com" target="_blank" class="btn-secondary glass"><span data-en="View LinkedIn" data-ar="زيارة لينكدإن">View LinkedIn</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================= CASE STUDY: FROM MEDINAH ================= -->
+<section class="page-section case-study" id="case-from-medinah">
+  <div class="wrap section-pad" style="padding-top:160px; max-width:880px;">
+    <a href="#work" data-route="work" class="btn-secondary glass" style="margin-bottom:40px; display:inline-flex;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      <span data-en="All Work" data-ar="كل الأعمال">كل الأعمال</span>
+    </a>
+    <span class="work-tag" style="position:static; display:inline-block; margin-bottom:20px;" data-en="Social Media Design · Islamic Heritage" data-ar="تصميم سوشيال ميديا · التراث الإسلامي">تصميم سوشيال ميديا · التراث الإسلامي</span>
+    <h1 style="font-size:clamp(32px,4.5vw,52px); font-weight:800; letter-spacing:-0.02em; margin-bottom:20px; line-height:1.1;" data-en="From Medinah — Islamic Heritage Social Design" data-ar="من المدينة — تصميم سوشيال ميديا للتراث الإسلامي">من المدينة — تصميم سوشيال ميديا للتراث الإسلامي</h1>
+    <p style="color:var(--text-dim); line-height:1.75; margin-bottom:40px; font-size:16px;" data-en="A personal social media account dedicated to the history, heritage, and spiritual significance of Madinah. All posts are original design work — carousels, typography, and visual storytelling crafted to serve both Arabic-speaking Gulf audiences and international Muslim communities. The account reflects both creative direction and deep respect for the subject matter." data-ar="حساب سوشيال ميديا شخصي مخصص لتاريخ المدينة المنورة وتراثها وأهميتها الروحية. جميع المنشورات عمل تصميمي أصيل — كاروسيلات، طباعة، وسرد بصري مُصمَّم لخدمة الجمهور الناطق بالعربية في الخليج والجمهور المسلم الدولي.">A personal social media account dedicated to the history, heritage, and spiritual significance of Madinah. All posts are original design work — carousels, typography, and visual storytelling crafted to serve both Arabic-speaking Gulf audiences and international Muslim communities.</p>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:20px;">
+      <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/from-medinah/fm-01.png" alt="From Medinah 1" style="width:100%;display:block;"></div>
+      <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/from-medinah/fm-02.png" alt="From Medinah 2" style="width:100%;display:block;"></div>
+      <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/from-medinah/fm-03.png" alt="From Medinah 3" style="width:100%;display:block;"></div>
+      <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/from-medinah/fm-04.png" alt="From Medinah 4" style="width:100%;display:block;"></div>
+      <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/from-medinah/fm-05.png" alt="From Medinah 5" style="width:100%;display:block;"></div>
+      <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/from-medinah/fm-06.png" alt="From Medinah 6" style="width:100%;display:block;"></div>
+      <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/from-medinah/fm-07.png" alt="From Medinah 7" style="width:100%;display:block;"></div>
+      <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/from-medinah/fm-08.png" alt="From Medinah 8" style="width:100%;display:block;"></div>
+      <div style="border-radius:var(--radius-sm); overflow:hidden;"><img src="assets/projects/from-medinah/fm-09.png" alt="From Medinah 9" style="width:100%;display:block;"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CASE STUDY: LEVELS REAL ESTATES ================= -->
+<section class="page-section case-study" id="case-levels">
+  <div class="wrap section-pad" style="padding-top:160px; max-width:880px;">
+    <a href="#work" data-route="work" class="btn-secondary glass" style="margin-bottom:40px; display:inline-flex;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      <span data-en="All Work" data-ar="كل الأعمال">كل الأعمال</span>
+    </a>
+    <span class="work-tag" style="position:static; display:inline-block; margin-bottom:20px;" data-en="Social Media Design · Real Estate" data-ar="تصميم سوشيال ميديا · عقارات">تصميم سوشيال ميديا · عقارات</span>
+    <h1 style="font-size:clamp(32px,4.5vw,52px); font-weight:800; letter-spacing:-0.02em; margin-bottom:20px; line-height:1.1;" data-en="Levels Real Estates — Social Media Design" data-ar="مستويات العقارية — تصميم سوشيال ميديا">مستويات العقارية — تصميم سوشيال ميديا</h1>
+    <p style="color:var(--text-dim); line-height:1.75; margin-bottom:40px; font-size:16px;" data-en="A series of social media posts designed for a real estate brand — showcasing premium properties with a clean, elevated visual identity. The work demonstrates range in brand-specific design: understanding the aspirational language of the real estate sector and translating it into social content that is both scroll-stopping and brand-consistent." data-ar="سلسلة من منشورات السوشيال ميديا مصممة لعلامة عقارية — تعرض عقارات راقية بهوية بصرية نظيفة ورفيعة. يُظهر العمل تنوعاً في التصميم المرتبط بالعلامة التجارية: فهم اللغة الطموحة لقطاع العقارات وترجمتها لمحتوى سوشيال يوقف التمرير ويعكس هوية العلامة.">A series of social media posts designed for a real estate brand — showcasing premium properties with a clean, elevated visual identity.</p>
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-bottom:20px;">
+      <div style="border-radius:var(--radius-md); overflow:hidden;"><img src="assets/projects/levels/levels-01.jpg" alt="Levels 1" style="width:100%;display:block;"></div>
+      <div style="border-radius:var(--radius-md); overflow:hidden;"><img src="assets/projects/levels/levels-02.jpg" alt="Levels 2" style="width:100%;display:block;"></div>
+      <div style="border-radius:var(--radius-md); overflow:hidden;"><img src="assets/projects/levels/levels-03.webp" alt="Levels 3" style="width:100%;display:block;"></div>
+      <div style="border-radius:var(--radius-md); overflow:hidden;"><img src="assets/projects/levels/levels-04.webp" alt="Levels 4" style="width:100%;display:block;"></div>
+      <div style="grid-column:1/-1; border-radius:var(--radius-md); overflow:hidden;"><img src="assets/projects/levels/levels-05.jpg" alt="Levels 5" style="width:100%;display:block;"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <div class="footer-left" data-en="© 2026 Yasir Darwish. All rights reserved." data-ar="© 2026 ياسر درويش. جميع الحقوق محفوظة.">© 2026 Yasir Darwish. All rights reserved.</div>
+    <div class="footer-right">
+      <a href="mailto:m.yasirdarwish@gmail.com" data-en="Email" data-ar="بريد إلكتروني">Email</a>
+      <a href="https://linkedin.com" target="_blank" data-en="LinkedIn" data-ar="لينكدإن">LinkedIn</a>
+      <a href="#contact" data-route="contact" data-en="Contact" data-ar="تواصل">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
