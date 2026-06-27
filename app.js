@@ -13,10 +13,13 @@ function showRoute(route) {
 		v.muted = true;
 });
  
-  // Autoplay videos in the newly active section
-  if (target) {
-    target.querySelectorAll('video[autoplay]').forEach(v => { v.play().catch(() => {}); });
-  }
+// Autoplay videos in the newly active section
+if (target) {
+  target.querySelectorAll('video[autoplay]').forEach(v => {
+    v.muted = true;
+    v.play().catch(() => {});
+  });
+}
  
   document.querySelectorAll('.nav-links a, .mobile-drawer a').forEach(a => {
     a.classList.toggle('active', a.dataset.route === route);
@@ -79,7 +82,7 @@ function applyLang(lang) {
   const hero = document.getElementById('heroHeadline');
   if (hero) {
     hero.innerHTML = lang === 'ar'
-      ? `أبني علامات تجارية<br><span class='accent-word'>تنمو — استراتيجياً وبصرياً.</span>`
+      ? `أبني علامات تجارية<br><span class='accent-word'>تنمو — استراتيجيًا وبصريًا</span>`
       : "I Build Brands That Grow &mdash;<br><span class='accent-word'>Strategically and Visually.</span>";
   }
 }
@@ -138,7 +141,6 @@ document.addEventListener('click', function(e) {
     document.querySelectorAll('video').forEach(v => {
       v.pause();
       v.currentTime = 0;
-      v.muted = true;
     });
   }
 });
