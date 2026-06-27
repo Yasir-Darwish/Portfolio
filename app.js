@@ -1,7 +1,29 @@
 // ===== Routing =====
 const routes = ['home','work','about','skills','experience','contact',
   'case-santorio','case-asmara','case-shaer','case-acwapower','case-ewax','case-kidana',
-  'case-from-medinah','case-levels'];
+  'case-from-medinah','case-levels','case-bites'];
+
+function showRoute(route) {
+  if (!routes.includes(route)) route = 'home';
+ 
+// Pause all videos sitewide
+	document.querySelectorAll('video').forEach(v => {
+		v.pause();
+		v.currentTime = 0;
+		v.muted = true;
+});
+ 
+  // Autoplay videos in the newly active section
+  if (target) {
+    target.querySelectorAll('video[autoplay]').forEach(v => { v.play().catch(() => {}); });
+  }
+ 
+  document.querySelectorAll('.nav-links a, .mobile-drawer a').forEach(a => {
+    a.classList.toggle('active', a.dataset.route === route);
+  });
+ 
+  triggerReveal();
+}
 
 function showRoute(route) {
   if (!routes.includes(route)) route = 'home';
@@ -106,4 +128,26 @@ document.addEventListener('keydown', e => {
 document.addEventListener('DOMContentLoaded', () => {
   showRoute(getRouteFromHash());
   applyLang('ar'); // start in Arabic
+});
+
+
+// Extra safety — pause all videos on any click that triggers navigation
+document.addEventListener('click', function(e) {
+  const link = e.target.closest('[data-route]');
+  if (link) {
+    document.querySelectorAll('video').forEach(v => {
+      v.pause();
+      v.currentTime = 0;
+      v.muted = true;
+    });
+  }
+});
+
+// Pause all videos when using browser back/forward buttons
+window.addEventListener('popstate', function() {
+  document.querySelectorAll('video').forEach(v => {
+    v.pause();
+    v.currentTime = 0;
+    v.muted = true;
+  });
 });
